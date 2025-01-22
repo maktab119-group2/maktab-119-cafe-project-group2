@@ -1,5 +1,4 @@
 # maktab-119-cafe-project-group2
-# Maktab119_cafe_project_group2
 # Wood Coffee  
 
 Welcome to **Wood Coffee**, a collaborative project inspired by the warmth of a rustic, wood-themed coffee shop. This platform is designed to enhance the coffee shop experience by providing a dynamic and easy-to-use interface.  
