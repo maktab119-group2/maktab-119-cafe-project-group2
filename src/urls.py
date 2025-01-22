@@ -25,7 +25,7 @@ from django.conf.urls.i18n import i18n_patterns  # اضافه کردن i18n_patt
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('coffee_shop.urls'), name='coffee_shop'),
-] + i18n_patterns(  # استفاده از i18n_patterns برای زبان‌ها
+] + i18n_patterns(
     path('set-language/', set_language, name='set_language'),
 )
 
