@@ -78,3 +78,13 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, 'login.html', {'form': form})  
+
+
+def cashier_dashboard(request):
+    orders = Order.objects.filter(status='Pending')
+    return render(request, 'cafe/dashboard.html', {'orders': orders})
+
+
+def order_detail(request, order_id):
+    order = Order.objects.get(id=order_id)
+    return render(request, 'cafe/order_detail.html', {'order': order})
