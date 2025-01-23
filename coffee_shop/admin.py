@@ -11,6 +11,10 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ["order", "menu_item", "timestamp"]
 
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ['name' , 'price', 'category', 'discount', 'description', 'serving_time_period', 'estimated_cooking_time']
+
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'phone_number', 'email', 'password', 'birthday']
