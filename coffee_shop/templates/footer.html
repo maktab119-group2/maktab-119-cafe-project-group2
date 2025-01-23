@@ -1,0 +1,38 @@
+{% load static %}
+{% load i18n %}
+{% block footer %}
+<footer>
+  <div class="tm-black-bg">
+    <div class="container">
+      <div class="row margin-bottom-60">
+        <nav class="col-lg-3 col-md-3 tm-footer-nav tm-footer-div">
+          <ul>
+            <li><h3 class="tm-footer-div-title"><a href="{% url 'about' %}">{% trans "About Us" %}</a></h3></li>
+          </ul>
+        </nav>
+         <nav class="col-lg-3 col-md-3 tm-footer-nav tm-footer-div">
+          <ul>
+            <li><h3 class="tm-footer-div-title"><a href="{% url 'contact' %}">{% trans "Contact Us" %}</a></h3></li>
+          </ul>
+        </nav>
+        <div class="col-lg-4 col-md-4 tm-footer-div">
+          <h3 class="tm-footer-div-title">{% trans "Get Social" %}</h3>
+          <div class="tm-social-icons-container">
+            <a href="#" class="tm-social-icon"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="tm-social-icon"><i class="fa fa-linkedin"></i></a>
+            <a href="#" class="tm-social-icon"><i class="fa fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="container">
+      <div class="row tm-copyright">
+       <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Cafe House</p>
+     </div>
+   </div>
+ </div>
+</footer>
+{% endblock footer %}

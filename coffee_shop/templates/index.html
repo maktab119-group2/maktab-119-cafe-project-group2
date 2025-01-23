@@ -1,0 +1,141 @@
+{% load static %}
+{% load i18n %}
+{% include 'link & script.html' %}
+{% include 'header.html' %}
+{% block main %}
+<div class="tm-main-section light-gray-bg">
+  <div class="container" id="main">
+    <section class="tm-section row">
+      <div class="col-lg-9 col-md-9 col-sm-8">
+        <h2 class="tm-section-header gold-text tm-handwriting-font">The Best Coffee for you</h2>
+        <h2>Cafe Wood</h2>
+        <p class="tm-welcome-description">{% trans "where every cup tells a story of passion and quality. Our café is more than just a place to enjoy coffee – it’s a haven for coffee lovers seeking the perfect blend of flavor and ambiance. With hand-selected beans, expertly brewed drinks, and a cozy atmosphere surrounded by warm wooden tones, we’re dedicated to serving you the best coffee experience. Whether you’re here for a peaceful moment, a friendly chat, or to fuel your day, Wood Coffee is where your perfect cup awaits." %}</p>
+<!--        <a href="#" class="tm-more-button margin-top-30">Read More</a>-->
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-4 tm-welcome-img-container">
+        <div class="inline-block shadow-img">
+          <img src="{% static 'media/img/1.jpg' %}" alt="Image" class="img-circle img-thumbnail">
+        </div>
+      </div>
+    </section>
+    <section class="tm-section tm-section-margin-bottom-0 row">
+      <div class="col-lg-12 tm-section-header-container">
+        <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="{% static 'media/img/logo.png' %}" alt="Logo" class="tm-site-logo"> Popular Items</h2>
+        <div class="tm-hr-container"><hr class="tm-hr"></div>
+      </div>
+      <div class="col-lg-12 tm-popular-items-container">
+        <div class="tm-popular-item">
+          <img src="{% static 'media/menu_images/Hazelnut_praline_Mocha.jpg' %}" alt="Mocha" class="tm-popular-item-img">
+          <div class="tm-popular-item-description">
+            <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">m</span>ocha</h3><hr class="tm-popular-item-hr">
+            <p>{% trans "Every sip is a reminder of the moment when the bitter taste of life mixes with the sweetness of love." %}</p>
+            <div class="order-now-container">
+              <a href="#" class="order-now-link tm-handwriting-font">{% trans "Order Now" %}</a>
+            </div>
+          </div>
+        </div>
+        <div class="tm-popular-item">
+          <img src="{% static 'media/menu_images/cake_dubai_cheesecake.jpg' %}" alt="ice_latte" class="tm-popular-item-img">
+          <div class="tm-popular-item-description">
+            <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">d</span>ubai cheesecake</h3><hr class="tm-popular-item-hr">
+            <p>{% trans "This is a love story in the form of a dessert. Its soft cremes are a gentle whisper of love, while its biscuit base is like a layer of emotion." %}</p>
+            <div class="order-now-container">
+              <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="tm-popular-item">
+          <img src="{% static 'media/menu_images/latte.jpg' %}" alt="ice_latte" class="tm-popular-item-img">
+          <div class="tm-popular-item-description">
+            <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">l</span>atte</h3><hr class="tm-popular-item-hr">
+            <p>{% trans "A love story that has bitterness and sweetness together. Each sip is like a comforting hug that penetrates deep into the heart." %}</p>
+            <div class="order-now-container">
+              <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--    </section>-->
+<!--    <section class="tm-section row">-->
+<!--      <div class="col-lg-12 tm-section-header-container">-->
+<!--        <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="{% static 'media/img/logo.png' %}" alt="Logo" class="tm-site-logo"> Today's Special</h2>-->
+<!--        <div class="tm-hr-container"><hr class="tm-hr"></div>-->
+<!--      </div>-->
+<!--      <div class="col-lg-12 tm-special-container margin-top-60">-->
+<!--        <div class="tm-special-container-left"> &lt;!&ndash; left &ndash;&gt;-->
+<!--          <div class="tm-special-item">-->
+<!--            <div class="tm-special-img-container">-->
+<!--              <img src="{% static 'media/img/special-1.jpg' %}" alt="Special" class="tm-special-img img-responsive">-->
+<!--              <a href="#">-->
+<!--                <div class="tm-special-description">-->
+<!--                  <h3 class="tm-special-title">Donec pede justo</h3>-->
+<!--                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>-->
+<!--                </div>-->
+<!--              </a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="tm-special-container-right"> &lt;!&ndash; right &ndash;&gt;-->
+<!--          <div>-->
+<!--            <div class="tm-special-item">-->
+<!--              <div class="tm-special-img-container">-->
+<!--                <img src="{% static 'media/img/special-2.jpg' %}" alt="Special" class="img-responsive">-->
+<!--                <a href="#">-->
+<!--                  <div class="tm-special-description">-->
+<!--                    <h3 class="tm-special-title">Etiam sit amet</h3>-->
+<!--                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>-->
+<!--                  </div>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="tm-special-container-lower">-->
+<!--            <div class="tm-special-item">-->
+<!--              <div class="tm-special-img-container">-->
+<!--                <img src="{% static 'media/img/special-3.jpg' %}" alt="Special" class="img-responsive">-->
+<!--                <a href="#">-->
+<!--                  <div class="tm-special-description">-->
+<!--                    <p>Vivamus elementum</p>-->
+<!--                  </div>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="tm-special-item">-->
+<!--              <div class="tm-special-img-container">-->
+<!--                <img src="{% static 'media/img/special-4.jpg' %}" alt="Special" class="img-responsive">-->
+<!--                <a href="#">-->
+<!--                  <div class="tm-special-description">-->
+<!--                    <p>Quisque rutrum.</p>-->
+<!--                  </div>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
+    <section class="tm-section">
+      <div class="row">
+        <div class="col-lg-12 tm-section-header-container">
+          <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="{% static 'media/img/logo.png' %}" alt="Logo" class="tm-site-logo"> Daily Menu</h2>
+          <div class="tm-hr-container"><hr class="tm-hr"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="tm-daily-menu-container margin-top-60">
+          <div class="col-lg-4 col-md-4">
+            <img src="{% static 'media/img/menu-board.png' %}" alt="Menu board" class="tm-daily-menu-img">
+          </div>
+          <div class="col-lg-8 col-md-8">
+            <p>{% trans "Indulge in the perfect blend of flavors with our Daily Café Menu! From freshly brewed coffee and aromatic teas to delightful pastries and light bites, we offer a carefully curated selection to brighten your day. Each item is crafted with love to bring you comfort, energy, and a touch of sweetness. Discover something new every day at our cafe!" %}</p>
+<!--            <a href="#" class="tm-more-button margin-top-30">Read More</a>-->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+ <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>      <!-- jQuery -->
+ <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+{% endblock main %}
+{% include 'footer.html' %}
