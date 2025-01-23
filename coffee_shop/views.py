@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .models import MenuItem, Category, Order, Receipt
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login
-from .models import Order
 from .forms import MenuItemForm
 
 
