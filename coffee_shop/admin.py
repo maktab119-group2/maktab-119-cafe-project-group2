@@ -2,6 +2,12 @@ from django.contrib import admin
 from coffee_shop.models import *
 
 
+
+@admin.register(Receipt)    
+class ReceiptAdmin(admin.ModelAdmin):
+    list_display = ('order', 'total_price', 'final_price ', 'timestamp')
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ["user", "table", "menu_items", "status", "timestamp"]
