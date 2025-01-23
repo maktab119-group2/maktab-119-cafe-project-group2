@@ -1,9 +1,16 @@
 from django.contrib import admin
-
 from coffee_shop.models import *
 
 
-# Register your models here.
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ["user", "table", "menu_items", "status", "timestamp"]
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ["order", "menu_item", "timestamp"]
+
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
     list_display = ['name' , 'price', 'category', 'discount', 'description', 'serving_time_period', 'estimated_cooking_time']
@@ -19,3 +26,4 @@ class TableAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
+

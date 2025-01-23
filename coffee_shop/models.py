@@ -63,13 +63,14 @@ class User(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-
+      
 class Table(models.Model):
     table_number = models.PositiveIntegerField(unique=True)
     cafe_space_position = models.CharField(max_length=50)
 
     def __str__(self):
         return f"Table {self.table_number}"
+
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -86,3 +87,22 @@ class MenuItem(models.Model):
     serving_time_period = models.CharField(max_length=50, null=True, blank=True)
     estimated_cooking_time = models.IntegerField(null=True, blank=True)
     image = models.ImageField(upload_to='menu_images/', null=True, blank=True)    
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE)
+    menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
+    status = models.CharField(max_length=20, default='Pending')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} {self.table} {self.menu_items} {self.status} {self.timestamp}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.order} {self.menu_item} {self.quantity}"
