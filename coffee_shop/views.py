@@ -3,6 +3,8 @@ from .models import MenuItem, Category, Order, Receipt
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth import authenticate, login
 from .forms import MenuItemForm
+from django.contrib import messages
+
 
 
 
@@ -63,20 +65,20 @@ def register(request):
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
 
-
-def user_login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
-    else:
-        form = UserLoginForm()
-    return render(request, 'login.html', {'form': form})  
+#
+# def user_login(request):
+#     if request.method == 'POST':
+#         form = UserLoginForm(request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data['email']
+#             password = form.cleaned_data['password']
+#             user = authenticate(request, email=email, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('home')
+#     else:
+#         form = UserLoginForm()
+#     return render(request, 'login.html', {'form': form})
 
 
 def cashier_dashboard(request):
@@ -87,3 +89,18 @@ def cashier_dashboard(request):
 def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     return render(request, 'cafe/order_detail.html', {'order': order})
+#
+#
+def login_cashier(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/admin/')  # تغییر مسیر بعد از ورود موفق
+        else:
+            messages.error(request, 'Invalid username or password.')
+
+    return render(request, 'login.html')
