@@ -20,20 +20,20 @@ class User(models.Model):
             MinLengthValidator(3)
         ]
     )
-    phone_number = models.CharField(
-        max_length=11,
-        validators=[
-            RegexValidator(
-                regex=r'^\d{9}$',
-            )
-        ],
-        help_text="فقط 10 رقم آخر شماره تلفن را وارد کنید."
-    )
-
-    def save(self, *args, **kwargs):
-        if not self.phone_number.startswith('+98'):
-            self.phone_number = f"+98{self.phone_number}"
-        super().save(*args, **kwargs)
+    phone_number = models.CharField(max_length=15)
+    #     max_length=11,
+    #     validators=[
+    #         RegexValidator(
+    #             regex=r'^\d{9}$',
+    #         )
+    #     ],
+    #     help_text="فقط 10 رقم آخر شماره تلفن را وارد کنید."
+    # )
+    #
+    # def save(self, *args, **kwargs):
+    #     if not self.phone_number.startswith('+98'):
+    #         self.phone_number = f"+98{self.phone_number}"
+    #     super().save(*args, **kwargs)
 
     email = models.EmailField(unique=True)
     password = models.CharField(
@@ -94,11 +94,11 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
-    status = models.CharField(max_length=20, default='Pending')
+    ready = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} {self.table} {self.menu_items} {self.status} {self.timestamp}"
+        return f"{self.user.first_name} {self.table} {self.menu_items} {self.ready} {self.timestamp}"
 
 
 class OrderItem(models.Model):
