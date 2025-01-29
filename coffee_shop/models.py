@@ -49,19 +49,19 @@ class User(models.Model):
     )
 
     birthday = models.DateField(null=True, blank=True)
-    # @property
-    # def discount(self):
-    #     today = datetime.today()
-    #     birth_day = self.birthday.day
-    #     birth_month = self.birthday.month
-    #     today_day = today.day
-    #     today_month = today.month
-    #
-    #     if birth_day == today_day and birth_month == today_month:
-    #         discount = 0.25
-    #     else:
-    #         discount = 0
-    #     return discount
+    @property
+    def discount(self):
+        today = datetime.today()
+        birth_day = self.birthday.day
+        birth_month = self.birthday.month
+        today_day = today.day
+        today_month = today.month
+
+        if birth_day == today_day and birth_month == today_month:
+            discount = 0.25
+        else:
+            discount = 0
+        return discount
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
