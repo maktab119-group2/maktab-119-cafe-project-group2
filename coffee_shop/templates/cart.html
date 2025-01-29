@@ -1,0 +1,72 @@
+{% load static %}
+{% load i18n %}
+{% include 'link & script.html' %}
+{% include 'header.html' %}
+{% block main %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #431605;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #dabe81;
+        font-weight: bold;
+    }
+    .tm-more-button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .tm-more-button:hover {
+        background-color: #0056b3;
+    }
+    section{
+        margin: 120px 40px 120px 40px;
+    }
+    form{
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans "Product Image" %}</th>
+                <th>{% trans "Product Name" %}</th>
+                <th>{% trans "Quantity" %}</th>
+                <th>{% trans "Price" %}</th>
+                <th>{% trans "Discount" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in cart %}
+                <tr>
+                    <td>{{ i.image }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.quantity }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.discount }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form method="post" action="{% url 'create_order' %}">
+        {% csrf_token %}
+        <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>
+    </form>
+</section>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+{% endblock main %}
+{% include 'footer.html' %}
