@@ -83,7 +83,7 @@ class Category(models.Model):
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,related_name='products')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='menuitem_set')
     discount = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     serving_time_period = models.CharField(max_length=50, null=True, blank=True)
