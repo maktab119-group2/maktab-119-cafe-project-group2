@@ -12,7 +12,7 @@ class ReceiptAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["user", "table", "status", "timestamp"]
+    list_display = ["user", "table", "ready", "timestamp"]
 
 
 @admin.register(OrderItem)
