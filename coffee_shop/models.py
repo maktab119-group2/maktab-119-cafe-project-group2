@@ -92,22 +92,16 @@ class MenuItem(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True)
+    menu_items = models.ManyToManyField(MenuItem)
     ready = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField(default=1)
+
 
     def __str__(self):
         return f"{self.user.first_name} {self.table} {self.menu_items} {self.ready} {self.timestamp}"
 
-
-class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-
-    def __str__(self):
-        return f"{self.order} {self.menu_item} {self.quantity}"
       
 class Receipt(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import MenuItem, Category, Order, Receipt
-from .forms import UserRegistrationForm, UserLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, MenuItemForm
 from django.contrib.auth import authenticate, login
-from .forms import MenuItemForm
 from django.contrib import messages
 
 
