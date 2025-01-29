@@ -20,16 +20,21 @@ def about(request):
     return render(request, 'about.html')
 
 
+# def menu(request):
+#     menu_items = MenuItem.objects.all()
+#     if request.method == 'POST':
+#         item_id = request.POST.get('item_id')
+#         if item_id:
+#             cart = request.session.get('cart', [])
+#             cart.append(item_id)
+#             request.session['cart'] = cart
+#             return redirect('menu')
+#     return render(request, 'menu.html', {'menu_items': menu_items})
+
+
 def menu(request):
-    menu_items = MenuItem.objects.all()
-    if request.method == 'POST':
-        item_id = request.POST.get('item_id')
-        if item_id:
-            cart = request.session.get('cart', [])
-            cart.append(item_id)
-            request.session['cart'] = cart
-            return redirect('menu')
-    return render(request, 'menu.html', {'menu_items': menu_items})
+    categories = Category.objects.prefetch_related('products').all()
+    return render(request, 'menu.html', {'categories': categories})
 
 def add_menu_item(request):
     if request.method == 'POST':
