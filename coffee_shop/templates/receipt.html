@@ -1,0 +1,88 @@
+{% load static %}
+{% load i18n %}
+{% include 'link & script.html' %}
+{% include 'header.html' %}
+{% block main %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #431605;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #dabe81;
+        font-weight: bold;
+    }
+    .tm-more-button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .tm-more-button:hover {
+        background-color: #0056b3;
+    }
+    section{
+        margin: 120px 40px 120px 40px;
+    }
+</style>
+
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">{% trans "Table Number:" %}</th>
+                <td colspan="1">{{ table.table_number }}</td>
+                <th colspan="1">{% trans "Order Number:" %}</th>
+                <td colspan="1">{{ receipt.order.id }}</td>
+            </tr>
+            <tr>
+                <th>{% trans "Product Name" %}</th>
+                <th>{% trans "Quantity" %}</th>
+                <th>{% trans "Price" %}</th>
+                <th>{% trans "Discount" %}</th>
+                <th>{% trans "Total Price" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in receipt %}
+                    <td>{{ i.order.menu_item.name }}</td>
+                    <td>{{ i.quantity }}</td>
+                    <td>{{ i.order.menu_item.price }}</td>
+                    <td>{{ i.order.menu_item.discount }}</td>
+                    <td>{{ i.total_price }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2">{% trans "Discount" %}</th>
+                <td colspan="3">{{ messages }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">{% trans "VAT (10%)" %}</th>
+                <td colspan="3">{{ vat_amount }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">{% trans "Final Price" %}</th>
+                <td colspan="3">{{ final_price }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'payment' %}" class="tm-more-button">{% trans "Payment" %}</a>
+    </div>
+</section>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+{% endblock main %}
+{% include 'footer.html' %}
