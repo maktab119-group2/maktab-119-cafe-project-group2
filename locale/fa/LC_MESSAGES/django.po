@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 08:00+0000\n"
+"POT-Creation-Date: 2025-01-29 13:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,55 +85,73 @@ msgstr ""
 "شلوغی‌های روزمره فاصله بگیرید و آرامش را تجربه کنید. منتظرتان هستیم تا در "
 "کافه چوب لحظاتی شاد و به‌یادماندنی را با ما سپری کنید."
 
+#: coffee_shop/templates/cart.html:45
+msgid "Product Image"
+msgstr "عکس"
+
+#: coffee_shop/templates/cart.html:46 coffee_shop/templates/order.html:106
+#: coffee_shop/templates/receipt.html:47
+msgid "Product Name"
+msgstr "نام"
+
+#: coffee_shop/templates/cart.html:47 coffee_shop/templates/order.html:107
+#: coffee_shop/templates/receipt.html:48
+msgid "Quantity"
+msgstr "تعداد"
+
+#: coffee_shop/templates/cart.html:48 coffee_shop/templates/order.html:108
+#: coffee_shop/templates/receipt.html:49
+msgid "Price"
+msgstr "قیمت"
+
+#: coffee_shop/templates/cart.html:49 coffee_shop/templates/receipt.html:50
+#: coffee_shop/templates/receipt.html:67
+msgid "Discount"
+msgstr "تخفیف"
+
+#: coffee_shop/templates/cart.html:66
+msgid "Acceptance"
+msgstr ""
+
 #: coffee_shop/templates/footer.html:10
 msgid "About Us"
-msgstr ""
-"درباره ما"
+msgstr "درباره ما"
 
 #: coffee_shop/templates/footer.html:15
 msgid "Contact Us"
-msgstr ""
-"تماس با ما"
+msgstr "تماس با ما"
 
 #: coffee_shop/templates/footer.html:19
 msgid "Get Social"
-msgstr ""
-"همراه‌مان باشید"
+msgstr "همراه‌مان باشید"
 
 #: coffee_shop/templates/header.html:51 coffee_shop/templates/header.html:85
 msgid "Cafe Wood"
-msgstr ""
-"کافه چوب"
+msgstr "کافه چوب"
 
 #: coffee_shop/templates/header.html:58
 msgid "Home"
-msgstr ""
-"خانه"
+msgstr "خانه"
 
 #: coffee_shop/templates/header.html:59
 msgid "Admin"
-msgstr ""
-"مدیر"
+msgstr "مدیر"
 
 #: coffee_shop/templates/header.html:60
 msgid "Menu"
-msgstr ""
-"منو"
+msgstr "منو"
 
 #: coffee_shop/templates/header.html:61
 msgid "Cart"
-msgstr ""
-"سبد خرید"
+msgstr "سبد خرید"
 
 #: coffee_shop/templates/header.html:62
 msgid "Order list"
-msgstr ""
-"لیست سفارشات"
+msgstr "لیست سفارشات"
 
 #: coffee_shop/templates/header.html:84
 msgid "Welcome To"
-msgstr ""
-"خوش آمدید به"
+msgstr "خوش آمدید به"
 
 #: coffee_shop/templates/header.html:86
 msgid ""
@@ -145,10 +163,10 @@ msgstr ""
 "با منظره ای رویایی در محیطی رویایی در دنج ترین کافه تهران، نمایی زیبا و "
 "فضایی دلنشین از تراس کافه چوب، غروب زیبای خورشید که با رنگ های بنفش و نارنجی "
 "رنگ آمیزی شده است، شما را به مهمانی ستاره ها میبرد"
+
 #: coffee_shop/templates/header.html:87
 msgid "Details"
-msgstr ""
-"جزئیات"
+msgstr "جزئیات"
 
 #: coffee_shop/templates/index.html:12 coffee_shop/templates/menu.html:12
 msgid ""
@@ -167,15 +185,18 @@ msgstr ""
 "بهترین تجربه قهوه به شما هستیم. چه برای لحظاتی آرام، چه برای یک گفتگوی "
 "دوستانه، چه برای انرژی بخشیدن به روز خود اینجا هستید، قهوه چوب جایی است که "
 "فنجان عالی شما در انتظار شماست."
+
 #: coffee_shop/templates/index.html:31
 msgid ""
 "Every sip is a reminder of the moment when the bitter taste of life mixes "
 "with the sweetness of love."
 msgstr ""
 "هر جرعه ای یادآور لحظه ای است که طعم تلخ زندگی با شیرینی عشق در می آمیزد."
+
 #: coffee_shop/templates/index.html:33
 msgid "Order Now"
 msgstr ""
+
 #: coffee_shop/templates/index.html:41
 msgid ""
 "This is a love story in the form of a dessert. Its soft cremes are a gentle "
@@ -191,6 +212,7 @@ msgid ""
 msgstr ""
 "داستان عاشقانه ای که تلخی و شیرینی در کنار هم دارد. هر جرعه مانند یک آغوش "
 "آرامش بخش است که به اعماق قلب نفوذ می کند."
+
 #: coffee_shop/templates/index.html:130
 msgid ""
 "Indulge in the perfect blend of flavors with our Daily Café Menu! From "
@@ -204,6 +226,91 @@ msgstr ""
 "شده برای روشن کردن روزتان ارائه می‌کنیم. هر مورد با عشق ساخته شده است تا "
 "آرامش، انرژی و حس شیرینی را برای شما به ارمغان بیاورد. هر روز در کافه ما چیز "
 "جدیدی کشف کنید!"
+
+#: coffee_shop/templates/login.html:6
+msgid "Login"
+msgstr "ورود"
+
+#: coffee_shop/templates/menu.html:57
+msgid "View shopping cart"
+msgstr ""
+
+#: coffee_shop/templates/order.html:105
+msgid "Order Number"
+msgstr "شماره سفارش"
+
+#: coffee_shop/templates/order.html:109
+#: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:2458
+msgid "Time"
+msgstr "ساعت"
+
+#: coffee_shop/templates/order.html:110
+msgid "Status"
+msgstr "وضعیت"
+
+#: coffee_shop/templates/order.html:111 coffee_shop/templates/order.html:132
+msgid "Receipt"
+msgstr "رسید"
+
+#: coffee_shop/templates/payment.html:6
+#, fuzzy
+#| msgid "Details"
+msgid "Payment Details"
+msgstr "جزئیات"
+
+#: coffee_shop/templates/payment.html:11
+msgid "Payment Method"
+msgstr ""
+
+#: coffee_shop/templates/payment.html:13
+msgid "Credit Card"
+msgstr ""
+
+#: coffee_shop/templates/payment.html:14
+msgid "Debit Card"
+msgstr ""
+
+#: coffee_shop/templates/payment.html:15
+msgid "Cash"
+msgstr ""
+
+#: coffee_shop/templates/payment.html:20
+msgid "Amount"
+msgstr ""
+
+#: coffee_shop/templates/payment.html:24
+msgid "Pay Now"
+msgstr ""
+
+#: coffee_shop/templates/payment.html:28
+msgid "Payment Successful!"
+msgstr ""
+
+#: coffee_shop/templates/receipt.html:41
+msgid "Table Number:"
+msgstr "شماره میز"
+
+#: coffee_shop/templates/receipt.html:43
+msgid "Order Number:"
+msgstr "شماره سفارش"
+
+#: coffee_shop/templates/receipt.html:51
+msgid "Total Price"
+msgstr "قیمت"
+
+#: coffee_shop/templates/receipt.html:71
+#, python-format
+msgid "VAT (10%%)"
+msgstr "مالیات"
+
+#: coffee_shop/templates/receipt.html:75
+msgid "Final Price"
+msgstr "مجموع"
+
+#: coffee_shop/templates/receipt.html:82
+msgid "Payment"
+msgstr ""
+
 #: venv/lib/python3.10/site-packages/django/contrib/messages/apps.py:15
 msgid "Messages"
 msgstr ""
@@ -584,10 +691,6 @@ msgstr ""
 msgid ""
 "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
 "invalid time."
-msgstr ""
-
-#: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:2458
-msgid "Time"
 msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/db/models/fields/__init__.py:2566

@@ -1,16 +1,16 @@
-/** 
+/**
 
 Cafe House Template
 
 http://www.templatemo.com/tm-466-cafe-house
 
 
-    
+
 COLOR CODES
   Gold: #c79c60;
 */
 
-/** Preloader 
+/** Preloader
 * https://ihatetomatoes.net/create-custom-preloading-screen/
 */
 #loader-wrapper {
@@ -69,7 +69,7 @@ COLOR CODES
 }
 
 @-webkit-keyframes spin {
-    0%   { 
+    0%   {
         -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
         -ms-transform: rotate(0deg);  /* IE 9 */
         transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
@@ -81,7 +81,7 @@ COLOR CODES
     }
 }
 @keyframes spin {
-    0%   { 
+    0%   {
         -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
         -ms-transform: rotate(0deg);  /* IE 9 */
         transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
@@ -119,7 +119,7 @@ COLOR CODES
         -ms-transform: translateX(-100%);  /* IE 9 */
             transform: translateX(-100%);  /* Firefox 16+, IE 10+, Opera */
 
-    -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);  
+    -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
             transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 
@@ -128,13 +128,13 @@ COLOR CODES
         -ms-transform: translateX(100%);  /* IE 9 */
             transform: translateX(100%);  /* Firefox 16+, IE 10+, Opera */
 
--webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);  
+-webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
     transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
 }
 
 .loaded #loader {
     opacity: 0;
-    -webkit-transition: all 0.3s ease-out;  
+    -webkit-transition: all 0.3s ease-out;
             transition: all 0.3s ease-out;
 }
 .loaded #loader-wrapper {
@@ -144,14 +144,14 @@ COLOR CODES
         -ms-transform: translateY(-100%);  /* IE 9 */
             transform: translateY(-100%);  /* Firefox 16+, IE 10+, Opera */
 
-    -webkit-transition: all 0.3s 1s ease-out;  
+    -webkit-transition: all 0.3s 1s ease-out;
             transition: all 0.3s 1s ease-out;
 }
 /* end Preloader */
 
 body { overflow-x: hidden; }
-ul { 
-  margin: 0; 
+ul {
+  margin: 0;
   padding: 0;
 }
 * { font-family: 'Open Sans', sans-serif; }
@@ -169,7 +169,7 @@ ul {
   color: #c79c60;
   display: inline-block;
   font-size: 32px;
-  margin: 0 10px;  
+  margin: 0 10px;
 }
 .tm-logo-container { padding: 10px 0; }
 .tm-nav {
@@ -182,7 +182,7 @@ ul {
       -ms-flex-align: center;
           align-items: center;
   font-weight: 700;
-  text-transform: uppercase;  
+  text-transform: uppercase;
 }
 .tm-nav li {
   list-style: none;
@@ -197,7 +197,7 @@ ul {
 }
 .tm-nav li a:hover,
  .tm-nav li a:focus,
- .tm-nav li a.active {  
+ .tm-nav li a.active {
   color: #c79c60;
   text-decoration: none;
 }
@@ -245,10 +245,10 @@ ul {
 .tm-welcome-description { text-align: justify; }
 .tm-welcome-img-container { text-align: right; }
 .tm-more-button-welcome { margin: 40px auto; }
-.tm-more-button {  
-  display: -webkit-box;  
-  display: -webkit-flex;  
-  display: -ms-flexbox;  
+.tm-more-button {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
@@ -260,7 +260,7 @@ ul {
           align-items: center;
   background-image: url(../media/img/tm-brown-button.png);
   width: 196px;
-  height: 46px;  
+  height: 46px;
   text-transform: uppercase;
   font-size: 16px;
   color: #c79c60;
@@ -358,7 +358,7 @@ ul {
   background: url(../media/img/popular-item-bg.png) no-repeat;
   background-size: 100% 100%;
   max-width: 294px;
-  margin-top: 30px;  
+  margin-top: 30px;
   margin-bottom: 80px;
 }
 .tm-popular-item-img { margin-left: 3px; }
@@ -504,10 +504,10 @@ ul {
 /* http://stackoverflow.com/questions/488830/ol-with-numbers-another-color */
 ol { counter-reset: item }
 ol li { display: block }
-ol li:before { 
-  content: counter(item) ". "; 
+ol li:before {
+  content: counter(item) ". ";
   counter-increment: item;
-  color: #c79c60; 
+  color: #c79c60;
   font-weight: 700;
 }
 .tm-section-header-container {
@@ -537,7 +537,7 @@ ol li:before {
   position: relative;
   z-index: 1;
   text-align: center;
-  text-transform: uppercase;  
+  text-transform: uppercase;
 }
 .tm-side-menu-bg {
   position: absolute;
@@ -626,7 +626,7 @@ ol li:before {
 .tm-product:hover .tm-product-price-link {
   border-color: #c79c60;
   color: #c79c60;
-  text-decoration: none;  
+  text-decoration: none;
 }
 .tm-product:hover .tm-product-title { color: #c79c60; }
 .tm-product-price-currency {
@@ -639,9 +639,9 @@ ol li:before {
   border-color: #c79c60;
   border-radius: 10px;
 }
-.form-control:focus { 
-  border-color: rgb(136, 93, 33); 
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(199, 156, 96, 0.6); 
+.form-control:focus {
+  border-color: rgb(136, 93, 33);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(199, 156, 96, 0.6);
           box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(199, 156, 96, 0.6);
 }
 button.tm-more-button {
@@ -650,7 +650,7 @@ button.tm-more-button {
   display: block;
   outline: 0;
 }
-#google-map { 
+#google-map {
   height: 350px;
   border: 3px solid #fff;
   border-radius: 10px;
@@ -659,8 +659,8 @@ button.tm-more-button {
 @media screen and (max-width: 991px) {
   .tm-welcome-content { margin-bottom: 250px; }
   .tm-main-section { padding-top: 200px; }
-  .light { 
-    width: 240px; 
+  .light {
+    width: 240px;
     height: auto;
   }
   .tm-footer-div { margin-bottom: 40px; }
@@ -683,7 +683,7 @@ button.tm-more-button {
 @media screen and (max-width: 767px) {
   .tm-nav { display: none; }
   .tm-nav li a { padding-left: 35px; }
-  .tm-logo-container { margin-left: 15px; }  
+  .tm-logo-container { margin-left: 15px; }
   .mobile-menu-icon {
     display: block;
     cursor: pointer;
@@ -714,22 +714,22 @@ button.tm-more-button {
   .light-1, .light-2 { display: none; }
   .tm-lights-container { -webkit-box-pack: center; -webkit-justify-content: center; -ms-flex-pack: center; justify-content: center; }
   .tm-welcome-header { font-size: 40px; }
-  .tm-welcome-img-container { 
+  .tm-welcome-img-container {
     margin-top: 30px;
-    text-align: left; 
+    text-align: left;
   }
   .tm-header-line { width: 44px; }
   .tm-main-section { padding-top: 130px; }
-  .tm-section-header-container { 
-    -webkit-box-align: start; 
-    -webkit-align-items: flex-start; 
-        -ms-flex-align: start; 
+  .tm-section-header-container {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+        -ms-flex-align: start;
             align-items: flex-start;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
-            flex-direction: column; 
+            flex-direction: column;
   }
 }
 
