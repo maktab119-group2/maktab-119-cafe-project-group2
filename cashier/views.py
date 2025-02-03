@@ -74,7 +74,7 @@ class CashierDashboardView(ListView):
     context_object_name = 'orders'
 
     def get_queryset(self):
-        return Order.objects.filter(status='Pending')
+        return Order.objects.filter(ready=True)
 
 
 class OrderDetailView(View):
