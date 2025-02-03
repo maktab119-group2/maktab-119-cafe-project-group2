@@ -3,11 +3,12 @@ from .models import MenuItem, Category, Order, Receipt
 from .forms import UserRegistrationForm, UserLoginForm, MenuItemForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+import json
 
 
 
 
-# Create your views here.
+
 def home(request):
     menu_items = MenuItem.objects.select_related('category').all()
     return render(request, 'index.html', {'menu_items': menu_items})
@@ -30,13 +31,73 @@ def menu(request):
 cart = []
 def add_to_cart(request, item_id):
     item = MenuItem.objects.get(id=item_id)
-    cart.append(item)
-    return redirect('menu')
 
+    cart = request.COOKIES.get('cart', '[]')
+    cart = json.loads(cart)
+
+    cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1}
+
+    item_in_cart = next((i for i in cart if i['id'] == item.id), None)
+    if item_in_cart:
+        item_in_cart['quantity'] += 1
+    else:
+        cart.append(cart_item)
+
+    response = redirect('menu')
+    response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Use json to serialize the cart list
+    return response
 def view_cart(request):
-    order = Order.objects.all()
-    menu_items = Order.objects.select_related('menu_item').all()
-    return render(request, 'cart.html', {'menu_items': menu_items, 'order': order, 'cart': cart})
+    cart = request.COOKIES.get('cart', '[]')
+    cart = json.loads(cart)
+    total_price = sum(item['price'] * item['quantity'] for item in cart)
+
+    context = {
+        'cart': cart,
+        'total_price': total_price
+    }
+
+    return render(request, 'cart.html', context)
+# def add_to_cart(request, item_id):
+#     item = MenuItem.objects.get(id=item_id)
+#     cart.append(item)
+#     return redirect('menu')
+# def add_to_cart(request, item_id):
+#     item = MenuItem.objects.get(id=item_id)
+#
+#     # Get the cart from cookies or initialize it
+#     cart = request.COOKIES.get('cart', [])
+#     cart = [] if cart == [] else eval(cart)  # Convert string back to list or initialize an empty list
+#
+#     # Create cart item
+#     cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1}
+#
+#     # Check if item already in cart
+#     item_in_cart = next((i for i in cart if i['id'] == item.id), None)
+#     if item_in_cart:
+#         item_in_cart['quantity'] += 1  # Update quantity
+#     else:
+#         cart.append(cart_item)  # Add new item
+#
+#     # Store the updated cart in cookies
+#     response = redirect('menu')  # Redirect after adding
+#     response.set_cookie('cart', str(cart), max_age=3600)  # Set cookie for 1 hour
+#     return response
+#
+# # def view_cart(request):
+# #     order = Order.objects.all()
+# #     menu_items = Order.objects.select_related('menu_item').all()
+# #     return render(request, 'cart.html', {'menu_items': menu_items, 'order': order, 'cart': cart})
+# def view_cart(request):
+#     cart = request.COOKIES.get('cart', '[]')  # Get cart from cookies or initialize to empty list
+#     cart = eval(cart)  # Convert string back to list
+#     total_price = sum(item['price'] * item['quantity'] for item in cart)  # Calculate total price
+#
+#     context = {
+#         'cart': cart,
+#         'total_price': total_price
+#     }
+#
+#     return render(request, 'cart.html', context)
 
 def order_view(request):
     order = Order.objects.all()

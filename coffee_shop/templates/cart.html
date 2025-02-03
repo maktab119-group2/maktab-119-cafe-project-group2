@@ -4,20 +4,44 @@
 {% include 'header.html' %}
 {% block main %}
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    section {
+        margin: 60px auto;
+        max-width: 1000px;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
     }
+
     th, td {
         border: 1px solid #431605;
-        padding: 8px;
+        padding: 12px;
         text-align: center;
+        transition: background-color 0.3s;
     }
+
     th {
         background-color: #dabe81;
         font-weight: bold;
     }
+
+    tr:hover {
+        background-color: #f1f1f1; /* Highlight on hover */
+    }
+
     .tm-more-button {
         display: inline-block;
         background-color: #007bff;
@@ -25,20 +49,53 @@
         padding: 10px 20px;
         text-decoration: none;
         border-radius: 5px;
+        margin-top: 20px;
+        text-align: center;
     }
+
     .tm-more-button:hover {
         background-color: #0056b3;
     }
-    section{
-        margin: 120px 40px 120px 40px;
-    }
-    form{
+
+    h2 {
         text-align: center;
-        margin-top: 30px;
+        color: #333;
+        margin-top: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    li:last-child {
+        border-bottom: none; /* Remove border from last item */
+    }
+
+    p {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
     }
 </style>
 
 <section>
+    <h2>{% trans "Your Cart" %}</h2>
+
     <table>
         <thead>
             <tr>
@@ -52,7 +109,7 @@
         <tbody>
             {% for i in cart %}
                 <tr>
-                    <td>{{ i.image }}</td>
+                    <td><img src="{{ i.image }}" alt="{{ i.name }}" style="max-width: 100px;"/></td>
                     <td>{{ i.name }}</td>
                     <td>{{ i.quantity }}</td>
                     <td>{{ i.price }}</td>
@@ -61,11 +118,22 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <p>{% trans "Total:" %} {{ total_price }}</p>
+
     <form method="post" action="{% url 'create_order' %}">
         {% csrf_token %}
-        <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>
+        <button type="submit" class="tm-more-button">{% trans "Accept Order" %}</button>
     </form>
+
+    <ul>
+        {% for item in cart %}
+            <li>{{ item.name }} <span>{{ item.price }} x {{ item.quantity }}</span></li>
+        {% endfor %}
+    </ul>
+
 </section>
+
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
 {% endblock main %}
