@@ -14,15 +14,19 @@ class ReceiptAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["user", "table", "ready", "timestamp", "quantity"]
+    list_display = ["user", "table", "ready", "timestamp"]
+
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'category', 'discount', 'description', 'serving_time_period', 'estimated_cooking_time']
+    list_display = ['name', 'price', 'category', 'discount', 'description', 'serving_time_period',
+                    'estimated_cooking_time']
+
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['text', 'menu_item', 'created_at']
+
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
