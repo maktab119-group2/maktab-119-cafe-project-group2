@@ -6,6 +6,8 @@ from django.views.generic import FormView, ListView
 from cashier.forms import *
 from coffee_shop.forms import *
 from coffee_shop.models import *
+from django.contrib import messages
+from .managers import CustomUserManager
 
 
 class AddMenuItemView(FormView):
@@ -33,30 +35,36 @@ class EditMenuItemView(View):
         return render(request, 'edit_menu_item.html', {'form': form})
 
 
-class RegisterView(FormView):
-    template_name = 'register.html'
-    form_class = UserRegistrationForm
-    success_url = '/login/'
+# class RegisterView(FormView):
+#     template_name = 'register.html'
+#     form_class = UserRegistrationForm
+#     success_url = '/login/'
+#
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
 
-
-class UserLoginView(View):
+class LoginCashierView(View):
     def get(self, request):
-        form = UserLoginForm()
-        return render(request, 'login.html', {'form': form})
+        form = LoginForm()
+        return render(request, 'login_cashier.html', {'form': form})
 
     def post(self, request):
-        form = UserLoginForm(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+
+            # Authenticate user using email
             user = authenticate(request, email=email, password=password)
-            if user:
+            if user is not None:
                 login(request, user)
-                return redirect('home')
+                messages.success(request, 'Login successful! Welcome back.')
+                return redirect('home')  # Redirect to home or another page after login
+            else:
+                form.add_error('email', 'Invalid email or password')
+                messages.error(request, 'Invalid email or password. Please try again.')  # Error message
         return render(request, 'login.html', {'form': form})
 
 
@@ -74,13 +82,14 @@ class OrderDetailView(View):
         order = get_object_or_404(Order, id=order_id)
         return render(request, 'order_detail.html', {'order': order})
 
-class LoginCashierView(View):
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect('/admin/')
-        messages.error(request, 'Invalid username or password.')
-        return render(request, 'login.html')
+
+# class LoginCashierView(View):
+#     def post(self, request):
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user:
+#             login(request, user)
+#             return redirect('/admin/')
+#         messages.error(request, 'Invalid username or password.')
+#         return render(request, 'login.html')
