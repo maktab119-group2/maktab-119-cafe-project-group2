@@ -37,35 +37,37 @@
         margin-top: 30px;
     }
 </style>
-
-<section>
-    <table>
+ <table>
         <thead>
             <tr>
-                <th>{% trans "Product Image" %}</th>
+                <th colspan="2">{% trans "Table Number:" %}</th>
+                <td colspan="2">{{ order.table.table_number }}</td>
+            </tr>
+            <tr>
                 <th>{% trans "Product Name" %}</th>
-                <th>{% trans "Quantity" %}</th>
                 <th>{% trans "Price" %}</th>
+                <th>{% trans "Quantity" %}</th>
                 <th>{% trans "Discount" %}</th>
             </tr>
         </thead>
-        <tbody>
-            {% for i in cart %}
-                <tr>
-                    <td>{{ i.image }}</td>
-                    <td>{{ i.name }}</td>
-                    <td>{{ i.quantity }}</td>
-                    <td>{{ i.price }}</td>
-                    <td>{{ i.discount }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+       <tbody>
+    {% for i in cart %}
+        <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.price }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.discount }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
     </table>
     <form method="post" action="{% url 'create_order' %}">
         {% csrf_token %}
         <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>
     </form>
 </section>
+
+
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
 {% endblock main %}

@@ -2,11 +2,6 @@ from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 from django.utils.datetime_safe import datetime
 
-
-
-# Create your models here.
-
-
 class User(models.Model):
     first_name = models.CharField(
         max_length=255,
@@ -21,20 +16,6 @@ class User(models.Model):
         ]
     )
     phone_number = models.CharField(max_length=15)
-    #     max_length=11,
-    #     validators=[
-    #         RegexValidator(
-    #             regex=r'^\d{9}$',
-    #         )
-    #     ],
-    #     help_text="فقط 10 رقم آخر شماره تلفن را وارد کنید."
-    # )
-    #
-    # def save(self, *args, **kwargs):
-    #     if not self.phone_number.startswith('+98'):
-    #         self.phone_number = f"+98{self.phone_number}"
-    #     super().save(*args, **kwargs)
-
     email = models.EmailField(unique=True)
     password = models.CharField(
         max_length=100,
@@ -84,30 +65,62 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='menuitem_set')
-    discount = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    discount = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, default= 1)
     description = models.TextField(null=True, blank=True)
     serving_time_period = models.CharField(max_length=50, null=True, blank=True)
     estimated_cooking_time = models.IntegerField(null=True, blank=True)
     image = models.ImageField(upload_to='menu_images/', null=True, blank=True)    
 
+class Comment(models.Model):
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='comment_set')
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True)
-    menu_items = models.ManyToManyField(MenuItem)
-    ready = models.BooleanField(default=False)
+    menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
+    ready = models.BooleanField(default=False)   #choose
     timestamp = models.DateTimeField(auto_now_add=True)
-    quantity = models.IntegerField(default=1)
-
 
     def __str__(self):
-        return f"{self.user.first_name} {self.table} {self.menu_items} {self.ready} {self.timestamp}"
+        return f"{self.table} {self.menu_items} {self.ready} {self.timestamp}"
 
-      
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='orderitem_set', on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.menu_item.name} x {self.quantity}"
+
 class Receipt(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    final_price = models.DecimalField(max_digits=10, decimal_places=2)
-    timestamp = models.DateTimeField(auto_now_add=True)      
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def total_price(self):
+        total_price = 0
+        for i in self.order.orderitem_set.all():
+            item = i.menu_item
+            if item.discount == 0:
+                total_price += item.price * i.quantity
+            else:
+                discounted_price = item.price - (item.price * (item.discount / 100))
+                total_price += discounted_price * i.quantity
+        return total_price
+
+    @property
+    def vat(self):
+        return self.total_price * (10 / 100)
+
+    @property
+    def final_price(self):
+        return self.total_price + self.vat
+
+    def save(self, *args, **kwargs):
+        """قبل از ذخیره، مقدار total_price را محاسبه می‌کند"""
+        super().save(*args, **kwargs)
 
 class Payment(models.Model):
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)

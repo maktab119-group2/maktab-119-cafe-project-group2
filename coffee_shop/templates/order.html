@@ -127,9 +127,9 @@
                             {% endif %}
                         </td>
                         <td>
-                            <form style="text-align: center; margin-top: 30px;" method="post" action="{% url 'receipt' %}">
+                            <form style="text-align: center; margin-top: 30px;" method="post" action="{% url 'receipt' order_id=order.id %}">
                                 {% csrf_token %}
-                                <a href="{% url 'receipt' %}" class="tm-more-button">{% trans "Receipt" %}</a>
+                                <a href="{% url 'receipt' order_id=order.id %}" class="tm-more-button">{% trans "Receipt" %}</a>
                             </form>
                         </td>
                     </tr>

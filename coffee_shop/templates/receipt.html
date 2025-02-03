@@ -52,15 +52,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                {% for i in receipt %}
+            {% for i in receipt %}
+                <tr>
                     <td>{{ i.order.menu_item.name }}</td>
                     <td>{{ i.quantity }}</td>
                     <td>{{ i.order.menu_item.price }}</td>
                     <td>{{ i.order.menu_item.discount }}</td>
                     <td>{{ i.total_price }}</td>
-                {% endfor %}
-            </tr>
+                </tr>
+            {% endfor %}
         </tbody>
         <tfoot>
             <tr>
