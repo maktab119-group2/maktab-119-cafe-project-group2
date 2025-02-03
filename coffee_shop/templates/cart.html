@@ -48,6 +48,9 @@
                 <th>{% trans "Price" %}</th>
                 <th>{% trans "Quantity" %}</th>
                 <th>{% trans "Discount" %}</th>
+                <th>{% trans "Total Price" %}</th>
+                <th>{% trans "Total Discount"%}</th>
+                <th>{% trans "Final Price"%}</th>
             </tr>
         </thead>
        <tbody>
@@ -55,8 +58,11 @@
         <tr>
             <td>{{ i.name }}</td>
             <td>{{ i.price }}</td>
-            <td>{{ order.quantity }}</td>
-            <td>{{ order.discount }}</td>
+            <td>{{ i.quantity }}</td>
+            <td>{{ i.discount }}</td>
+            <td>{{ total_price }}</td>
+            <td>{{ total_discount }}</td>
+            <td>{{ final_price }}</td>
         </tr>
     {% endfor %}
 </tbody>
