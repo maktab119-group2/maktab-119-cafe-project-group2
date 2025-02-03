@@ -61,11 +61,11 @@ class LoginCashierView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Login successful! Welcome back.')
-                return redirect('home')  # Redirect to home or another page after login
+                return redirect('cashier_dashboard')  # Redirect to home or another page after login
             else:
                 form.add_error('email', 'Invalid email or password')
                 messages.error(request, 'Invalid email or password. Please try again.')  # Error message
-        return render(request, 'login.html', {'form': form})
+        return render(request, 'login_cashier.html', {'form': form})
 
 
 class CashierDashboardView(ListView):
