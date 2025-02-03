@@ -1,7 +1,7 @@
-from django.db.models import Prefetch
-from django.http import Http404
+import json
+
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 
@@ -26,20 +26,25 @@ cart = []
 class AddToCartView(View):
     def get(self, request, item_id):
         item = get_object_or_404(MenuItem, id=item_id)
-        cart.append(item)
-        return redirect('menu')
-
-# query az orderitem mikham baray quantity
-# v faqat menuitem kagi nist
-# kash listi az dict bashe ya cooki
+        cart = request.COOKIES.get('cart', '[]')
+        cart = json.loads(cart)
+        cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1}
+        item_in_cart = next((i for i in cart if i['id'] == item.id), None)
+        if item_in_cart:
+            item_in_cart['quantity'] += 1
+        else:
+            cart.append(cart_item)
+        response = redirect('menu')
+        response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Use json to serialize the cart list
+        return response
 
 # مشاهده سبد خرید
 class ViewCartView(View):
     def get(self, request):
-        order = Order.objects.all()
-        menu_items = Order.objects.prefetch_related('menu_items').all()
-        return render(request, 'cart.html', {'menu_items': menu_items, 'order': order, 'cart': cart})
-
+        cart = request.COOKIES.get('cart', '[]')
+        cart = json.loads(cart)
+        context = {'cart': cart}
+        return render(request, 'cart.html', context)
 
 # مشاهده سفارش‌ها
 class OrderView(ListView):
@@ -52,8 +57,8 @@ class OrderView(ListView):
 class CreateOrderView(View):
     def get(self, request):
         order = Order.objects.create()
-        for item in cart:
-            order.menu_items.add(item)
+        for i in cart:
+            order.menu_items.add(i)
         cart.clear()
         return render(request, 'order.html', {'order': Order.objects.prefetch_related('menu_items').all()})
 
