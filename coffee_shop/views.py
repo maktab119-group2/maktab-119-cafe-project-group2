@@ -23,12 +23,15 @@ class MenuView(View):
 
 # افزودن آیتم به سبد خرید
 cart = []
+
+
 class AddToCartView(View):
     def get(self, request, item_id):
         item = get_object_or_404(MenuItem, id=item_id)
         cart = request.COOKIES.get('cart', '[]')
         cart = json.loads(cart)
-        cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1}
+        cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1,
+                     'discount': float(item.discount)}
         item_in_cart = next((i for i in cart if i['id'] == item.id), None)
         if item_in_cart:
             item_in_cart['quantity'] += 1
@@ -38,13 +41,19 @@ class AddToCartView(View):
         response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Use json to serialize the cart list
         return response
 
+
 # مشاهده سبد خرید
 class ViewCartView(View):
     def get(self, request):
         cart = request.COOKIES.get('cart', '[]')
         cart = json.loads(cart)
-        context = {'cart': cart}
+        total_price = sum(item['price'] * item['quantity'] for item in cart)
+        total_discount = sum(item['discount'] * item['quantity'] for item in cart if 'discount' in item)
+        final_price = total_price - total_discount
+        context = {'cart': cart, 'total_price': total_price, 'total_discount': total_discount,
+                   'final_price': final_price}
         return render(request, 'cart.html', context)
+
 
 # مشاهده سفارش‌ها
 class OrderView(ListView):
@@ -92,12 +101,10 @@ class ReceiptView(View):
         context = self.get_context_data(**kwargs)
         return render(request, 'receipt.html', context)
 
-
-    #
-    # def get(self, request):
-    #     vat = 0.10
-    #     receipt = Receipt.objects.select_related('order').all()
-    #     final_price = sum(i.order.menu_item.price * i.order.quantity for i in receipt)
-    #     vat_amount = final_price * vat
-    #     return render(request, 'receipt.html',
-    #                   {'receipt': receipt, 'vat_amount': vat_amount, 'final_price': final_price})
+# def get(self, request):
+#     vat = 0.10
+#     receipt = Receipt.objects.select_related('order').all()
+#     final_price = sum(i.order.menu_item.price * i.order.quantity for i in receipt)
+#     vat_amount = final_price * vat
+#     return render(request, 'receipt.html',
+#                   {'receipt': receipt, 'vat_amount': vat_amount, 'final_price': final_price})
