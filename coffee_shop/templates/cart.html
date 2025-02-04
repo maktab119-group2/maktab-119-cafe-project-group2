@@ -37,11 +37,19 @@
         margin-top: 30px;
     }
 </style>
- <table>
+<section>
+    <h3>Your Selected Table: 
+        {% if request.GET.table_number %}
+            Table {{ request.GET.table_number }}
+        {% else %}
+            No table selected
+        {% endif %}
+    </h3>
+    <table>
         <thead>
             <tr>
                 <th colspan="2">{% trans "Table Number:" %}</th>
-                <td colspan="2">{{ order.table.table_number }}</td>
+                <td colspan="2">{{ table_number }}</td>
             </tr>
             <tr>
                 <th>{% trans "Product Name" %}</th>
@@ -53,19 +61,19 @@
                 <th>{% trans "Final Price"%}</th>
             </tr>
         </thead>
-       <tbody>
-    {% for i in cart %}
-        <tr>
-            <td>{{ i.name }}</td>
-            <td>{{ i.price }}</td>
-            <td>{{ i.quantity }}</td>
-            <td>{{ i.discount }}</td>
-            <td>{{ total_price }}</td>
-            <td>{{ total_discount }}</td>
-            <td>{{ final_price }}</td>
-        </tr>
-    {% endfor %}
-</tbody>
+        <tbody>
+            {% for i in cart %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.quantity }}</td>
+                    <td>{{ i.discount }}</td>
+                    <td>{{ total_price }}</td>
+                    <td>{{ total_discount }}</td>
+                    <td>{{ final_price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
     <form method="post" action="{% url 'create_order' %}">
         {% csrf_token %}

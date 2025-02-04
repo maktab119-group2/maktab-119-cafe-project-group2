@@ -1,7 +1,7 @@
 import json
 
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 
@@ -18,7 +18,18 @@ class HomeView(ListView):
 class MenuView(View):
     def get(self, request):
         categories = Category.objects.all()
-        return render(request, 'menu.html', {'categories': categories})
+        menu_items = MenuItem.objects.all()
+        tables = Table.objects.all()
+
+        table_number = request.GET.get('table_number', None)
+
+        context = {
+            "categories": categories,
+            "menu_items": menu_items,
+            "tables": tables,
+            "table_number": table_number
+        }
+        return render(request, "menu.html", context)
 
 
 # افزودن آیتم به سبد خرید
@@ -30,8 +41,10 @@ class AddToCartView(View):
         item = get_object_or_404(MenuItem, id=item_id)
         cart = request.COOKIES.get('cart', '[]')
         cart = json.loads(cart)
+        table_number = request.GET.get('table_number', None)
+
         cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1,
-                     'discount': float(item.discount)}
+                     'discount': float(item.discount), 'table_number': table_number}
         item_in_cart = next((i for i in cart if i['id'] == item.id), None)
         if item_in_cart:
             item_in_cart['quantity'] += 1
@@ -40,6 +53,7 @@ class AddToCartView(View):
         response = redirect('menu')
         response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Use json to serialize the cart list
         return response
+
 
 
 # مشاهده سبد خرید
@@ -73,12 +87,12 @@ class CreateOrderView(View):
 
 
 # آماده‌سازی سفارش
-class MarkOrderReadyView(View):
-    def get(self, request, order_id):
-        order = get_object_or_404(Order, id=order_id)
-        order.ready = True
-        order.save()
-        return redirect('order')
+# class MarkOrderReadyView(View):
+#     def get(self, request, order_id):
+#         order = get_object_or_404(Order, id=order_id)
+#         order.ready = True
+#         order.save()
+#         return redirect('order')
 
 
 # صدور رسید
@@ -100,6 +114,25 @@ class ReceiptView(View):
         """نمای GET"""
         context = self.get_context_data(**kwargs)
         return render(request, 'receipt.html', context)
+
+
+
+class TableListView(ListView):
+    model = Table
+    template_name = "TableList.html"  # مسیر قالب HTML
+    context_object_name = "tables"  # نام متغیر ارسالی به قالب
+
+class TableDetailView(DetailView):
+    model = Table
+    template_name = "TableDetail.html"
+    context_object_name = "table"
+    pk_url_kwarg = "table_id"  # برای گرفتن table_id از URL
+
+
+from django.views import View
+
+
+
 
 # def get(self, request):
 #     vat = 0.10
