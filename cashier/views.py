@@ -2,7 +2,7 @@ from pyexpat.errors import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, DetailView
 from cashier.forms import *
 from coffee_shop.forms import *
 from coffee_shop.models import *
@@ -10,8 +10,31 @@ from django.contrib import messages
 from .managers import CustomUserManager
 
 
+class ItemListView(ListView):
+    model = MenuItem
+    template_name = 'all_item.html'
+    context_object_name = 'all_item'
+    #
+    # def get_queryset(self):
+    #     queryset = MenuItem.objects.filter(is_deleted=False)
+    #     # category_id = self.request.GET.get('category', 0)
+    #     # if category_id:
+    #     #     queryset = queryset.filter(category__id=category_id)
+    #     return queryset
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     # context['all_category'] = Category.objects.all()
+    #     return context
+class ItemDetailView(DetailView):
+    model = MenuItem
+    template_name = 'item_detail.html'
+    context_object_name = 'item'
+    def get_object(self):
+        return get_object_or_404(MenuItem, id=self.kwargs['item_id'])
+
 class AddMenuItemView(FormView):
-    template_name = 'cafe/add_menu_item.html'
+    template_name = 'add_menu_item.html'
     form_class = MenuItemForm
     success_url = '/menu/'
 
@@ -74,7 +97,15 @@ class CashierDashboardView(ListView):
     context_object_name = 'orders'
 
     def get_queryset(self):
-        return Order.objects.filter(ready=True)
+        orders = Order.objects.filter(ready=True)
+        print(orders)  # مقدار orders را در ترمینال چاپ کن
+        return orders
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_items'] = MenuItem.objects.all()  # اضافه کردن menu_items به context
+        return context
+
 
 
 class OrderDetailView(View):

@@ -4,7 +4,46 @@
     <meta charset="UTF-8">
     <title>edit_menu_item</title>
 </head>
+<style>
+    #btn{
+            padding: 15px 30px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #a227f4;
+            color: white;
+        }
+    #sec_1{
+      display: grid;
+      justify-items: center;
+    }
+</style>
 <body>
+        <section id="sec_1">
+            <form id="frm" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button id="btn" type="submit">ثبت بروزرسانی</button>
+            </form>
+        </section>
+        <script>
+            const btn_update = document.getElementById('btn');
+            const frm_update = document.getElementById('frm');
+            const inputs = frm_update.querySelectorAll('input');
 
+            btn_update.addEventListener("click", (e) => {
+                e.preventDefault();
+                const userConfirmed = confirm("آیا از بروزرسانی خود مطمئن هستید؟");
+                if (userConfirmed) {
+                    alert("آیتم مورد نظر با موفقیت بروزرسانی شد.");
+                    frm_update.submit();
+                    inputs.forEach(input => {
+                    input.value = '';
+                    });
+                }
+            });
+        </script>
 </body>
 </html>
