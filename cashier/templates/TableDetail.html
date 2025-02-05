@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جزئیات میز</title>
+    <title>Table Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,28 +42,43 @@
         .order-item:last-child {
             border-bottom: none;
         }
+        .ready {
+            color: #00ff00;
+        }
+        .not-ready {
+            color: #ff4444;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>جزئیات میز: {{ table.name }}</h1>
-        <p>وضعیت: <strong>{{ table.status }}</strong></p>
+        <h1>Table Detail: {{ table.table_number }}</h1>
+        <p>Position: <strong>{{ table.cafe_space_position }}</strong></p>
 
         <div class="orders">
-            <h2>سفارش‌ها</h2>
+            <h2>Orders</h2>
             {% if table.orders.all %}
                 {% for order in table.orders.all %}
                     <div class="order-item">
-                        <p>سفارش #{{ order.id }} - مبلغ: {{ order.total_price }} تومان</p>
-                        <p>تاریخ: {{ order.created_at|date:"Y-m-d H:i" }}</p>
+                        <p>Order ID: #{{ order.id }}</p>
+                        <p>Timestamp: {{ order.timestamp|date:"Y-m-d H:i" }}</p>
+                        <p>Status: <span class="{% if order.ready %}ready{% else %}not-ready{% endif %}">
+                            {% if order.ready %} Ready {% else %} Not Ready {% endif %}
+                        </span></p>
+                        <h3>Ordered Items:</h3>
+                        <ul>
+                            {% for item in order.menu_items.all %}
+                                <li>{{ item.name }} - {{ item.price }}$</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 {% endfor %}
             {% else %}
-                <p>هیچ سفارشی برای این میز ثبت نشده است.</p>
+                <p>No orders have been registered for this table.</p>
             {% endif %}
         </div>
 
-        <a href="{% url 'table_list' %}" class="back-btn">بازگشت به لیست میزها</a>
+        <a href="{% url 'table_list' %}" class="back-btn">Return to Tables List</a>
     </div>
 </body>
 </html>
