@@ -42,6 +42,7 @@ class AddCommentView(View):
 
         # Redirect to the previous page or home if HTTP_REFERER is not available
         return redirect(request.META.get("HTTP_REFERER", "/"))
+
 # افزودن آیتم به سبد خرید
 cart = []
 class AddToCartView(View):
