@@ -1,14 +1,6 @@
 from django import forms
 from coffee_shop.models import *
 
-#
-# class UserRegistrationForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['first_name', 'last_name', 'phone_number', 'email', 'password']
-#
-#     password = forms.CharField(widget=forms.PasswordInput)
-
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
@@ -25,6 +17,20 @@ class LoginForm(forms.Form):
             'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400'
         })
     )
+
+
+# class OrderUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Order
+#         fields = ['status']
+#         widgets = {
+#             'status': forms.Select(choices=[
+#                 ('pending', 'Pending'),
+#                 ('preparing', 'Preparing'),
+#                 ('ready', 'Ready'),
+#                 ('completed', 'Completed')
+#             ])
+#         }
 
 
 class MenuItemForm(forms.ModelForm):
