@@ -48,7 +48,7 @@ class AddMenuItemView(FormView):
         return super().form_valid(form)
 
 
-class EditMenuItemView(View):
+class CashierEditMenuItemView(View):
     def get(self, request, item_id):
         item = get_object_or_404(MenuItem, id=item_id)
         form = MenuItemForm(instance=item)
@@ -86,14 +86,13 @@ class LoginCashierView(View):
         return render(request, 'login_cashier.html', {'form': form})
 
 
-class CashierDashboardView(ListView):
+class CashierOrdersListView(ListView):
     model = Order
     template_name = 'cashier_dashboard.html'
     context_object_name = 'orders'
 
     def get_queryset(self):
-        orders = Order.objects.filter(ready=True)
-        print(orders)  # مقدار orders را در ترمینال چاپ کن
+        orders = Order.objects.all()
         return orders
 
     def get_context_data(self, **kwargs):
@@ -102,7 +101,7 @@ class CashierDashboardView(ListView):
         return context
 
 
-class OrderUpdateView(UpdateView):
+class CashierOrderUpdateView(UpdateView):
     model = Order
     fields = ['ready']  # Cashier can update the "ready" status
     template_name = 'cashier/order_update.html'
