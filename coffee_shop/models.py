@@ -2,6 +2,7 @@ from django.core.validators import MinLengthValidator, RegexValidator, MinValueV
 from django.db import models
 from django.utils.datetime_safe import datetime
 
+
 class User(models.Model):
     first_name = models.CharField(
         max_length=255,
@@ -30,6 +31,7 @@ class User(models.Model):
     )
 
     birthday = models.DateField(null=True, blank=True)
+
     @property
     def discount(self):
         today = datetime.today()
@@ -46,11 +48,11 @@ class User(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-      
+
+
 class Table(models.Model):
     table_number = models.PositiveIntegerField(unique=True)
     cafe_space_position = models.CharField(max_length=50)
-
 
     def __str__(self):
         return f"Table {self.table_number}"
@@ -61,31 +63,36 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='menuitem_set')
-    discount = models.IntegerField(null=True, blank=True, default=0,validators=[MinValueValidator(0), MaxValueValidator(99)])
+    discount = models.IntegerField(null=True, blank=True, default=0,
+                                   validators=[MinValueValidator(0), MaxValueValidator(99)])
     description = models.TextField(null=True, blank=True)
     serving_time_period = models.CharField(max_length=50, null=True, blank=True)
     estimated_cooking_time = models.IntegerField(null=True, blank=True)
-    image = models.ImageField(upload_to='menu_images/', null=True, blank=True)    
+    image = models.ImageField(upload_to='menu_images/', null=True, blank=True)
+
 
 class Comment(models.Model):
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='comment_set')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True)
     menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
-    ready = models.BooleanField(default=False)   #choose
+    ready = models.BooleanField(default=False)  # choose
     timestamp = models.DateTimeField(auto_now_add=False)
 
     def __str__(self):
         return f"{self.table} {self.menu_items} {self.ready} {self.timestamp}"
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='orderitem_set', on_delete=models.CASCADE)
@@ -94,6 +101,7 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.menu_item.name} x {self.quantity}"
+
 
 class Receipt(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -123,6 +131,7 @@ class Receipt(models.Model):
         """قبل از ذخیره، مقدار total_price را محاسبه می‌کند"""
         super().save(*args, **kwargs)
 
+
 class Payment(models.Model):
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -130,4 +139,4 @@ class Payment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Payment for Receipt {self.receipt.id}"    
+        return f"Payment for Receipt {self.receipt.id}"
