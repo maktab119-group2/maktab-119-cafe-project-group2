@@ -80,7 +80,7 @@
             border-radius: 10px;
         }
 
-        .menu-container, .order-container {
+        .order-container {
             background: white;
             padding: 10px;
             margin-bottom: 10px;
@@ -111,6 +111,23 @@
         .edit-btn:hover {
             background: #e0a800;
         }
+
+        /* Style for the edit button beside the title */
+        .item-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-title span {
+            margin-right: 10px;
+        }
+
+        /* Add line between edit buttons */
+        .divider {
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -130,16 +147,39 @@
         <!-- Left Panel - Orders List -->
         <div class="left-panel">
             <h3>{% trans "Orders List" %}</h3>
-            {% for order in orders %}
-                <div class="order-container">
-                    <p><strong>{% trans "Order ID:" %}</strong> {{ order.id }}</p>
-                    <p><strong>{% trans "Ready:" %}</strong> {{ order.ready|yesno:"✅,❌" }}</p>
-                    <a href="{% url 'order_detail' order.id %}" class="btn">{% trans "View Order" %}</a>
-                    <a href="{% url 'order_update' order.id %}" class="ready-btn">{% trans "Mark as Ready" %}</a>
-                </div>
-            {% empty %}
+
+            {% if orders %}
+                {% for order in orders %}
+                    <div class="order-container">
+                        <p><strong>{% trans "Order ID:" %}</strong> {{ order.id }}</p>
+                        <p><strong>{% trans "Table:" %}</strong>
+                            {% if order.table %}
+                                {{ order.table.name }}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </p>
+                        <p><strong>{% trans "Timestamp:" %}</strong> {{ order.timestamp }}</p>
+                        <p><strong>{% trans "Items Ordered:" %}</strong>
+                            {% for order_item in order.orderitem_set.all %}
+                                <span>{{ order_item.menu_item.name }} ({{ order_item.quantity }})</span>
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p><strong>{% trans "Total Amount:" %}</strong> {{ order.total_amount }}</p> <!-- Ensure this is calculated in your model or view -->
+                        <p><strong>{% trans "Ready:" %}</strong> {{ order.ready|yesno:"✅,❌" }}</p>
+
+                        <!-- Check if order.id is available before creating the URL -->
+                        {% if order.id %}
+                            <a href="{% url 'order_update' order.id %}" class="ready-btn">{% trans "Mark as Ready" %}</a>
+                        {% else %}
+                            <span>{% trans "Order ID is missing." %}</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
                 <p>{% trans "No orders available." %}</p>
-            {% endfor %}
+            {% endif %}
         </div>
 
         <!-- Right Panel - Edit Menu Items -->
@@ -147,8 +187,12 @@
             <h3>{% trans "Edit Menu Items" %}</h3>
             {% for item in menu_items %}
                 <div class="menu-container">
-                    <p><strong>{% trans "Item:" %}</strong> {{ item.name }}</p>
-                    <a href="{% url 'edit_menu_item' item.id %}" class="edit-btn">{% trans "Edit Item" %}</a>
+                    <div class="item-title">
+                        <span><strong>{% trans "Item:" %}</strong> {{ item.name }}</span>
+                        <a href="{% url 'edit_menu_item' item.id %}" class="edit-btn">{% trans "Edit Item" %}</a>
+                    </div>
+                    <!-- Divider between buttons -->
+                    <div class="divider"></div>
                 </div>
             {% empty %}
                 <p>{% trans "No menu items available." %}</p>
