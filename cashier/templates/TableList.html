@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیست میزها</title>
+    <title>table list</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +11,7 @@
             color: #fff;
             text-align: center;
         }
+
         .container {
             width: 50%;
             margin: auto;
@@ -19,6 +20,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
+
         .table-item {
             padding: 10px;
             margin: 10px;
@@ -26,6 +28,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .table-item a {
             text-decoration: none;
             color: #00ffcc;
@@ -34,15 +37,18 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>tables list</h1>
-        {% for table in tables %}
-            <div class="table-item">
-                <a href="{% url 'table_detail' table.id %}">{{ table.name }}</a> - وضعیت: {{ table.status }}
-            </div>
-        {% empty %}
-            <p>هیچ میزی ثبت نشده است.</p>
-        {% endfor %}
-    </div>
+<div class="container">
+    <h1>tables list</h1>
+    {% for table in tables %}
+        <div class="table-item">
+            <a href="{% url 'table_detail' table.id %}">Table {{ table.table_number }}</a>
+            {% with table.orders.first as order %}
+                {% if order %}
+                    - First Order: {{ order.menu_items }} ({{ order.timestamp }})
+                {% endif %}
+            {% endwith %}
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>

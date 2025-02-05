@@ -111,6 +111,15 @@ class CashierOrderUpdateView(UpdateView):
         response = super().form_valid(form)
         return response
 
+class TableListView(ListView):
+    model = Table
+    template_name = "TableList.html"  # مسیر قالب HTML
+    context_object_name = "tables"  # نام متغیر ارسالی به قالب
+
+class TableDetailView(DetailView):
+    model = Table
+    template_name = "TableDetail.html"
+    context_object_name = "table"
 class MarkOrderReadyView(View):
     def get(self, request, order_id):
         order = get_object_or_404(Order, id=order_id)
