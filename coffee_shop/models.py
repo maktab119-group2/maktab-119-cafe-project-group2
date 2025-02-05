@@ -1,4 +1,4 @@
-from django.core.validators import MinLengthValidator, RegexValidator
+from django.core.validators import MinLengthValidator, RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.datetime_safe import datetime
 
@@ -66,7 +66,7 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='menuitem_set')
-    discount = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, default=0)
+    discount = models.IntegerField(null=True, blank=True, default=0,validators=[MinValueValidator(0), MaxValueValidator(99)])
     description = models.TextField(null=True, blank=True)
     serving_time_period = models.CharField(max_length=50, null=True, blank=True)
     estimated_cooking_time = models.IntegerField(null=True, blank=True)
