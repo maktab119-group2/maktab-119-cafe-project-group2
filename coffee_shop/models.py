@@ -78,7 +78,7 @@ class MenuItem(models.Model):
 
 
 class Comment(models.Model):
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='comment_set')
+    product = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='comment_set')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
