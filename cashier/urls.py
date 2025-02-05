@@ -10,7 +10,7 @@ urlpatterns = [
     path('cashier-dashboard/', CashierOrdersListView.as_view(), name='cashier_dashboard'),
     path('order/update/<int:pk>/', CashierOrderUpdateView.as_view(), name='order_update'),
     path('mark_order_ready/<int:order_id>/', MarkOrderReadyView.as_view(), name='mark_order_ready'),
-    path("tables/", TableListView.as_view(), name="table_list"),
-    path("tables/<int:pk>/", TableDetailView.as_view(), name="table_detail"),
+    path('tables/', TableListView.as_view(), name='table_list'),
+    path('tables/<int:pk>/', TableDetailView.as_view(), name='table_detail'),
 
 ]

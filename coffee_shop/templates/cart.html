@@ -38,7 +38,6 @@
         margin-top: 30px;
     }
 </style>
-
 <section>
     <table>
         <thead>
@@ -62,18 +61,15 @@
             {% endfor %}
         </tbody>
     </table>
-
     <div style="text-align: right; margin-top: 20px;">
         <h4>Total Price: {{ total_price|floatformat:2 }}</h4>
         <h4>Total Discount: {{ total_discount|floatformat:2 }}</h4>
         <h4>Final Price: {{ final_price|floatformat:2 }}</h4>
     </div>
-
     <div style="text-align: center; margin-top: 30px;">
         <a href="{% url 'payment' %}" class="tm-more-button">{% trans "Payment" %}</a>
     </div>
 </section>
-
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
 {% endblock main %}
