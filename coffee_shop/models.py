@@ -82,7 +82,7 @@ class Order(models.Model):
     table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True)
     menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
     ready = models.BooleanField(default=False)   #choose
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=False)
 
     def __str__(self):
         return f"{self.table} {self.menu_items} {self.ready} {self.timestamp}"
