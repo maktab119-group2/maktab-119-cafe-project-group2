@@ -31,7 +31,7 @@ class MenuView(View):
         }
         return render(request, "menu.html", context)
 
-
+cart = []
 class AddToCartView(View):
     def get(self, request, item_id):
         item = get_object_or_404(MenuItem, id=item_id)
@@ -48,17 +48,14 @@ class AddToCartView(View):
             'table_number': table_number
         }
 
-        # Check if the item is already in the cart
         item_in_cart = next((i for i in cart if i['id'] == item.id), None)
         if item_in_cart:
             item_in_cart['quantity'] += 1  # Increase quantity if item already in the cart
         else:
             cart.append(cart_item)  # Otherwise, add new item to cart
 
-        # Update the cart in cookies
         response = redirect('menu')  # Redirect to menu after adding the item
         response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Store the updated cart in cookies
-
         return response
 
 
@@ -123,14 +120,6 @@ class CreateOrderView(View):
         response.delete_cookie('cart')  # Remove the cart cookie after checkout
         return response
 
-
-# آماده‌سازی سفارش
-# class MarkOrderReadyView(View):
-#     def get(self, request, order_id):
-#         order = get_object_or_404(Order, id=order_id)
-#         order.ready = True
-#         order.save()
-#         return redirect('order')
 
 class PaymentView(View):
     def post(self, request):

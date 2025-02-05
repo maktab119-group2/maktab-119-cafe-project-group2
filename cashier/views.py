@@ -110,3 +110,10 @@ class CashierOrderUpdateView(UpdateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         return response
+
+class MarkOrderReadyView(View):
+    def get(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+        order.ready = True
+        order.save()
+        return redirect('cashier_dashboard')

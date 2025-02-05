@@ -40,13 +40,6 @@
 </style>
 
 <section>
-    <h3>Your Selected Table:
-        {% if request.GET.table_number %}
-            Table {{ request.GET.table_number }}
-        {% else %}
-            No table selected
-        {% endif %}
-    </h3>
     <table>
         <thead>
             <tr>
@@ -77,14 +70,6 @@
     </div>
 
     <div style="text-align: center; margin-top: 30px;">
-        <form method="post" action="{% url 'create_order' %}">
-            {% csrf_token %}
-            <input type="hidden" name="table_number" value="{{ request.GET.table_number }}">
-            <button type="submit" class="tm-more-button">{% trans "Place Order" %}</button>
-        </form>
-    </div>
-
-    <div style="text-align: center; margin-top: 30px;">
         <a href="{% url 'payment' %}" class="tm-more-button">{% trans "Payment" %}</a>
     </div>
 </section>
@@ -92,5 +77,4 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
 {% endblock main %}
-
 {% include 'footer.html' %}

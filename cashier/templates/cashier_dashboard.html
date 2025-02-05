@@ -171,7 +171,7 @@
 
                         <!-- Check if order.id is available before creating the URL -->
                         {% if order.id %}
-                            <a href="{% url 'order_update' order.id %}" class="ready-btn">{% trans "Mark as Ready" %}</a>
+                            <a href="{% url 'mark_order_ready' order.id %}" class="ready-btn">{% trans "Mark as Ready" %}</a>
                         {% else %}
                             <span>{% trans "Order ID is missing." %}</span>
                         {% endif %}
