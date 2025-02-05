@@ -1,5 +1,5 @@
 import json
-
+from datetime import timezone
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
@@ -32,10 +32,6 @@ class MenuView(View):
         return render(request, "menu.html", context)
 
 
-# افزودن آیتم به سبد خرید
-cart = []
-
-
 class AddToCartView(View):
     def get(self, request, item_id):
         item = get_object_or_404(MenuItem, id=item_id)
@@ -43,29 +39,54 @@ class AddToCartView(View):
         cart = json.loads(cart)
         table_number = request.GET.get('table_number', None)
 
-        cart_item = {'id': item.id, 'name': item.name, 'price': item.price, 'quantity': 1,
-                     'discount': float(item.discount), 'table_number': table_number}
+        cart_item = {
+            'id': item.id,
+            'name': item.name,
+            'price': item.price,
+            'quantity': 1,
+            'discount': float(item.discount),
+            'table_number': table_number
+        }
+
+        # Check if the item is already in the cart
         item_in_cart = next((i for i in cart if i['id'] == item.id), None)
         if item_in_cart:
-            item_in_cart['quantity'] += 1
+            item_in_cart['quantity'] += 1  # Increase quantity if item already in the cart
         else:
-            cart.append(cart_item)
-        response = redirect('menu')
-        response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Use json to serialize the cart list
+            cart.append(cart_item)  # Otherwise, add new item to cart
+
+        # Update the cart in cookies
+        response = redirect('menu')  # Redirect to menu after adding the item
+        response.set_cookie('cart', json.dumps(cart), max_age=3600)  # Store the updated cart in cookies
+
         return response
 
 
-
-# مشاهده سبد خرید
 class ViewCartView(View):
     def get(self, request):
         cart = request.COOKIES.get('cart', '[]')
         cart = json.loads(cart)
-        total_price = sum(item['price'] * item['quantity'] for item in cart)
-        total_discount = sum(item['discount'] * item['quantity'] for item in cart if 'discount' in item)
+
+        total_price = 0
+        total_discount = 0
+        final_price = 0
+
+        # Calculate total price, discount, and final price
+        for item in cart:
+            item_price = item['price'] * item['quantity']
+            item_discount = item['price'] * item['quantity'] * (item['discount'] / 100)
+            total_price += item_price
+            total_discount += item_discount
+
         final_price = total_price - total_discount
-        context = {'cart': cart, 'total_price': total_price, 'total_discount': total_discount,
-                   'final_price': final_price}
+
+        context = {
+            'cart': cart,
+            'total_price': total_price,
+            'total_discount': total_discount,
+            'final_price': final_price,
+        }
+
         return render(request, 'cart.html', context)
 
 
@@ -78,12 +99,29 @@ class OrderView(ListView):
 
 # ایجاد سفارش
 class CreateOrderView(View):
-    def get(self, request):
-        order = Order.objects.create()
-        for i in cart:
-            order.menu_items.add(i)
-        cart.clear()
-        return render(request, 'order.html', {'order': Order.objects.prefetch_related('menu_items').all()})
+    def post(self, request):
+        cart = request.COOKIES.get('cart', '[]')
+        cart = json.loads(cart)
+
+        # Create an order object
+        table_number = request.GET.get('table_number', None)
+        table = get_object_or_404(Table, table_number=table_number)
+
+        # Create the Order
+        order = Order.objects.create(table=table, timestamp=timezone.now())
+
+        # Create OrderItems for each cart item
+        for item in cart:
+            menu_item = get_object_or_404(MenuItem, id=item['id'])
+            order_item = OrderItem.objects.create(order=order, menu_item=menu_item, quantity=item['quantity'])
+
+        # Create Receipt for the order
+        receipt = Receipt.objects.create(order=order)
+
+        # Optionally clear the cart after placing the order
+        response = redirect('payment')  # Redirect to the payment page
+        response.delete_cookie('cart')  # Remove the cart cookie after checkout
+        return response
 
 
 # آماده‌سازی سفارش
@@ -93,6 +131,25 @@ class CreateOrderView(View):
 #         order.ready = True
 #         order.save()
 #         return redirect('order')
+
+class PaymentView(View):
+    def post(self, request):
+        receipt_id = request.POST.get('receipt_id')
+        amount = request.POST.get('amount')
+        payment_method = request.POST.get('payment_method')
+
+        receipt = get_object_or_404(Receipt, id=receipt_id)
+
+        # Create Payment record
+        Payment.objects.create(
+            receipt=receipt,
+            amount=amount,
+            payment_method=payment_method,
+        )
+
+        # Optionally clear the cart or show success message
+        response = redirect('payment_success')  # Redirect to success page
+        return response
 
 
 # صدور رسید
@@ -116,11 +173,11 @@ class ReceiptView(View):
         return render(request, 'receipt.html', context)
 
 
-
 class TableListView(ListView):
     model = Table
     template_name = "TableList.html"  # مسیر قالب HTML
     context_object_name = "tables"  # نام متغیر ارسالی به قالب
+
 
 class TableDetailView(DetailView):
     model = Table
@@ -130,9 +187,6 @@ class TableDetailView(DetailView):
 
 
 from django.views import View
-
-
-
 
 # def get(self, request):
 #     vat = 0.10

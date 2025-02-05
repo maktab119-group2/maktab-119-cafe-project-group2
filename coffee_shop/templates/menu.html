@@ -51,7 +51,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                
+
             </section>
         </div>
     </div>
@@ -76,11 +76,10 @@
                 $(this).addClass("active"); // اضافه کردن کلاس active به لینک کلیک‌شده
             });
         });
-        
+
     </script>
     <!-- انتخاب میز -->
     <div class="table-selection">
-{#        <label for="table-select" class="tm-more-button tm-more-button-welcome">{% trans "Choose your table" %}:</label>#}
         <select id="table-select" class="tm-more-button tm-more-button-welcome" style="color: black">
             <option value="">{% trans "Select a table" %}</option>
             {% for table in tables %}
@@ -94,31 +93,17 @@
                class="tm-more-button tm-more-button-welcome">{% trans "View shopping cart" %}</a>
         </div>
     </div>
-{#        <button id="confirm-table" class="tm-more-button">{% trans "Confirm Table" %}</button>#}
-{#    <a id="choose-table-btn" href="#">Confirm</a>#}
-
-{#<script>#}
-{#document.getElementById("choose-table-btn").addEventListener("click", function(event) {#}
-{#    event.preventDefault();#}
-{#    var tableId = document.getElementById("table").value;#}
-{#    if (tableId) {#}
-{#        window.location.href = "{% url 'cart' %}?table_number=" + tableId;#}
-{#    } else {#}
-{#        alert("Please select a table first!");#}
-{#    }#}
-{#</script>#}
-
-        <script>
-            document.getElementById("confirm-table").addEventListener("click", function () {
-                var selectedTable = document.getElementById("table-select").value;
-                if (selectedTable) {
-                    window.location.href = "{% url 'cart' %}".replace("1", selectedTable);
-                } else {
-                    alert("chose a table.");
-                }
-            });
-    </script>
-    <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+<script>
+    document.getElementById("confirm-table").addEventListener("click", function () {
+        var selectedTable = document.getElementById("table-select").value;
+        if (selectedTable) {
+            window.location.href = "{% url 'cart' %}".replace("1", selectedTable);
+        } else {
+            alert("chose a table.");
+        }
+    });
+</script>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
 {% endblock main %}
 {% include 'footer.html' %}

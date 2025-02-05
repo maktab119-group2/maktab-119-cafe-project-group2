@@ -1,6 +1,8 @@
 from django.db import models
 from .managers import CustomUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+
+
 # from coffee_shop import models.
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -23,7 +25,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class CashierUser(CustomUser):
-
     class Meta:
         proxy = True
         verbose_name_plural = 'کاربران مدیریت صندوق'
