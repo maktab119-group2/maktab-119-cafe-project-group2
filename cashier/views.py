@@ -124,3 +124,15 @@ class OrderDetailView(View):
 #             return redirect('/admin/')
 #         messages.error(request, 'Invalid username or password.')
 #         return render(request, 'login.html')
+
+
+class TableListView(ListView):
+    model = Table
+    template_name = "TableList.html"  # مسیر قالب HTML
+    context_object_name = "tables"  # نام متغیر ارسالی به قالب
+
+class TableDetailView(DetailView):
+    model = Table
+    template_name = "TableDetail.html"
+    context_object_name = "table"
+    pk_url_kwarg = "table_id"  # برای گرفتن table_id از URL

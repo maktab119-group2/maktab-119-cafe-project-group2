@@ -11,5 +11,7 @@ urlpatterns = [
     path('cashier-dashboard/', CashierDashboardView.as_view(), name='cashier_dashboard'),
     path('order-detail/<int:order_id>/', OrderDetailView.as_view(), name='order_detail'),
     path('login-cashier/', LoginCashierView.as_view(), name='login_cashier'),
+    path("tables/", TableListView.as_view(), name="table_list"),
+    path("tables/<int:table_id>/", TableDetailView.as_view(), name="table_detail"),
 
 ]
