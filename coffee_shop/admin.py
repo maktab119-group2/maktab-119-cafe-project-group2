@@ -6,7 +6,9 @@ from coffee_shop.models import *
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('amount', 'payment_method', 'timestamp')
 
-
+# @admin.register(Comment)
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ['text', 'product', 'created_at']
 @admin.register(Receipt)
 class ReceiptAdmin(admin.ModelAdmin):
     list_display = ('order', 'total_price', 'final_price', 'timestamp')
@@ -25,7 +27,7 @@ class MenuItemAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['text', 'menu_item', 'created_at']
+    list_display = ['text', 'product', 'created_at']
 
 
 @admin.register(User)

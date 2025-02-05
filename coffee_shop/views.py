@@ -32,6 +32,16 @@ class MenuView(View):
         return render(request, "menu.html", context)
 
 
+class AddCommentView(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(MenuItem, id=product_id)
+        text = request.POST.get("comment_text", "").strip()
+
+        if text:
+            Comment.objects.create(product=product, text=text)
+
+        # Redirect to the previous page or home if HTTP_REFERER is not available
+        return redirect(request.META.get("HTTP_REFERER", "/"))
 # افزودن آیتم به سبد خرید
 cart = []
 

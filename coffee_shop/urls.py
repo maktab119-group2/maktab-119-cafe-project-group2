@@ -19,4 +19,5 @@ urlpatterns = [
     path('payment/', TemplateView.as_view(template_name="payment.html"), name='payment'),
 
     path("tables/", TableListView.as_view(), name="table_list"),
+    path('add_comment/<int:product_id>/', AddCommentView.as_view(), name='add_comment'),
 ]
