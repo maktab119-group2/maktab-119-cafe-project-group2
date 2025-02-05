@@ -9,5 +9,7 @@ urlpatterns = [
     path('edit-menu-item/<int:item_id>/', CashierEditMenuItemView.as_view(), name='edit_menu_item'),
     path('cashier-dashboard/', CashierOrdersListView.as_view(), name='cashier_dashboard'),
     path('order/update/<int:pk>/', CashierOrderUpdateView.as_view(), name='order_update'),
+    path("tables/", TableListView.as_view(), name="table_list"),
+    path("tables/<int:pk>/", TableDetailView.as_view(), name="table_detail"),
 
 ]

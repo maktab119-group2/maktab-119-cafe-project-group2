@@ -85,7 +85,7 @@ class Comment(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True, related_name='orders')
     menu_items = models.ManyToManyField(MenuItem, through='OrderItem')
     ready = models.BooleanField(default=False)  # choose
     timestamp = models.DateTimeField(auto_now_add=False)
