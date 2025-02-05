@@ -19,5 +19,4 @@ urlpatterns = [
     path('payment/', TemplateView.as_view(template_name="payment.html"), name='payment'),
 
     path("tables/", TableListView.as_view(), name="table_list"),
-    path("tables/<int:table_id>/", TableDetailView.as_view(), name="table_detail"),
 ]

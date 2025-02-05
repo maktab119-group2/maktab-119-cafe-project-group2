@@ -38,7 +38,7 @@
     }
 </style>
 <section>
-    <h3>Your Selected Table: 
+    <h3>Your Selected Table:
         {% if request.GET.table_number %}
             Table {{ request.GET.table_number }}
         {% else %}
@@ -75,10 +75,13 @@
             {% endfor %}
         </tbody>
     </table>
-    <form method="post" action="{% url 'create_order' %}">
-        {% csrf_token %}
-        <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>
-    </form>
+{#    <form method="post" action="{% url 'create_order' %}">#}
+{#        {% csrf_token %}#}
+{#        <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>#}
+{#    </form>#}
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'payment' %}" class="tm-more-button">{% trans "Payment" %}</a>
+    </div>
 </section>
 
 

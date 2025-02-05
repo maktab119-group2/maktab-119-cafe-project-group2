@@ -81,6 +81,7 @@
 </head>
 <body>
 <div class="btn">
+    <a href="{% url 'table_list' %}" class="tm-more-button tm-more-button-welcome">{% trans "all table" %}</a>
     <a href="{% url 'add_menu_item' %}" class="tm-more-button tm-more-button-welcome">{% trans "crate item" %}</a>
     <a href="{% url 'all_item' %}" class="tm-more-button tm-more-button-welcome">{% trans "all item" %}</a>
     {% for item in menu_items %}

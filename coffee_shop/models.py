@@ -51,6 +51,7 @@ class Table(models.Model):
     table_number = models.PositiveIntegerField(unique=True)
     cafe_space_position = models.CharField(max_length=50)
 
+
     def __str__(self):
         return f"Table {self.table_number}"
 
