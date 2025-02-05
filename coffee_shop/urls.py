@@ -1,17 +1,22 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from .views import *
 
 urlpatterns = [
-    path('', home, name='home'),
-    path('login/', login_cashier, name='login'),
-    path('contact/', contact, name='contact'),
-    path('about/', about, name='about'),
-    path('menu/', menu, name='menu'),
-    path('add/<int:item_id>/', add_to_cart, name='add_to_cart'),
-    path('cart/', view_cart, name='cart'),
-    path('order/', order_view, name='order'),
-    path('create_order/', create_order, name='create_order'),
-    path('mark_order_ready/<int:order_id>/', mark_order_ready, name='mark_order_ready'),
-    path('receipt/', receipt, name='receipt'),
-    path('payment/', payment, name='payment'),
+    path('', HomeView.as_view(), name='home'),
+    path('contact/', TemplateView.as_view(template_name="contact.html"), name='contact'),
+    path('about/', TemplateView.as_view(template_name="about.html"), name='about'),
+    path('menu/', MenuView.as_view(), name='menu'),
+    path('add-to-cart/<int:item_id>/', AddToCartView.as_view(), name='add_to_cart'),
+    path('cart/', ViewCartView.as_view(), name='cart'),
+    path('order/', OrderView.as_view(), name='order'),
+
+    path('create-order/', CreateOrderView.as_view(), name='create_order'),
+
+    # path('mark-order-ready/<int:order_id>/', MarkOrderReadyView.as_view(), name='mark_order_ready'),
+
+    path('receipt/<int:order_id>/', ReceiptView.as_view(), name='receipt'),
+    path('payment/', TemplateView.as_view(template_name="payment.html"), name='payment'),
+
+    path("tables/", TableListView.as_view(), name="table_list"),
 ]

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_menu_item</title>
+</head>
+<style>
+    #btn {
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #a227f4;
+        color: white;
+    }
+
+    #sec_1 {
+        display: grid;
+        justify-items: center;
+    }
+</style>
+<body>
+
+<section id="sec_1">
+    <form id="frm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button id="btn" type="submit">ثبت آیتم</button>
+    </form>
+</section>
+<script>
+    const btn_create = document.getElementById('btn');
+    const frm_create = document.getElementById('frm');
+    const inputs = frm_create.querySelectorAll('input');
+
+    btn_create.addEventListener("click", (e) => {
+        e.preventDefault();
+        const userConfirmed = confirm("آیا از ثبت خود مطمئن هستید؟");
+        if (userConfirmed) {
+            frm_create.submit();
+            alert("آیتم مورد نظر با موفقیت ثبت شد.");
+        }
+    });
+</script>
+</body>
+</html>

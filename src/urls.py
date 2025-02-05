@@ -22,11 +22,13 @@ from django.conf.urls.i18n import set_language
 from django.conf.urls.i18n import i18n_patterns  # اضافه کردن i18n_patterns
 
 
-urlpatterns = [
+urlpatterns = ([
     path('admin/', admin.site.urls),
     path('', include('coffee_shop.urls'), name='coffee_shop'),
-] + i18n_patterns(
+    path('cashier_dashboard/', include('cashier.urls'), name='cashier'),
+]
++ i18n_patterns(
     path('set-language/', set_language, name='set_language'),
-)
+))
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

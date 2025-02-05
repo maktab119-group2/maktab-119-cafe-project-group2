@@ -37,35 +37,54 @@
         margin-top: 30px;
     }
 </style>
-
 <section>
+    <h3>Your Selected Table:
+        {% if request.GET.table_number %}
+            Table {{ request.GET.table_number }}
+        {% else %}
+            No table selected
+        {% endif %}
+    </h3>
     <table>
         <thead>
             <tr>
-                <th>{% trans "Product Image" %}</th>
+                <th colspan="2">{% trans "Table Number:" %}</th>
+                <td colspan="2">{{ table_number }}</td>
+            </tr>
+            <tr>
                 <th>{% trans "Product Name" %}</th>
-                <th>{% trans "Quantity" %}</th>
                 <th>{% trans "Price" %}</th>
+                <th>{% trans "Quantity" %}</th>
                 <th>{% trans "Discount" %}</th>
+                <th>{% trans "Total Price" %}</th>
+                <th>{% trans "Total Discount"%}</th>
+                <th>{% trans "Final Price"%}</th>
             </tr>
         </thead>
         <tbody>
             {% for i in cart %}
                 <tr>
-                    <td>{{ i.image }}</td>
                     <td>{{ i.name }}</td>
-                    <td>{{ i.quantity }}</td>
                     <td>{{ i.price }}</td>
+                    <td>{{ i.quantity }}</td>
                     <td>{{ i.discount }}</td>
+                    <td>{{ total_price }}</td>
+                    <td>{{ total_discount }}</td>
+                    <td>{{ final_price }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <form method="post" action="{% url 'create_order' %}">
-        {% csrf_token %}
-        <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>
-    </form>
+{#    <form method="post" action="{% url 'create_order' %}">#}
+{#        {% csrf_token %}#}
+{#        <a href="{% url 'create_order' %}" class="tm-more-button">{% trans "Acceptance" %}</a>#}
+{#    </form>#}
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'payment' %}" class="tm-more-button">{% trans "Payment" %}</a>
+    </div>
 </section>
+
+
 <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
 {% endblock main %}
