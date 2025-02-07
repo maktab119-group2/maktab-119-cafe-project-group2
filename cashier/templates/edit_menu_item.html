@@ -22,8 +22,9 @@
 </style>
 <body>
         <section id="sec_1">
+            {% csrf_token %}
             <form id="frm" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+
                 {{ form.as_p }}
                 <button id="btn" type="submit">ثبت بروزرسانی</button>
             </form>
