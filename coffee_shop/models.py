@@ -128,7 +128,6 @@ class Receipt(models.Model):
         return self.total_price + self.vat
 
     def save(self, *args, **kwargs):
-        """قبل از ذخیره، مقدار total_price را محاسبه می‌کند"""
         super().save(*args, **kwargs)
 
 
