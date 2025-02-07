@@ -43,7 +43,6 @@ class AddCommentView(View):
         # Redirect to the previous page or home if HTTP_REFERER is not available
         return redirect(request.META.get("HTTP_REFERER", "/"))
 
-# افزودن آیتم به سبد خرید
 cart = []
 class AddToCartView(View):
     def get(self, request, item_id):
@@ -100,14 +99,13 @@ class ViewCartView(View):
         return render(request, 'cart.html', context)
 
 
-# مشاهده سفارش‌ها
 class OrderView(ListView):
     model = Order
     template_name = 'order.html'
     context_object_name = 'order'
 
 
-# ایجاد سفارش
+
 class CreateOrderView(View):
     def post(self, request):
         cart = request.COOKIES.get('cart', '[]')
