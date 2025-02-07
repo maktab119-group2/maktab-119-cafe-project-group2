@@ -15,18 +15,7 @@ class ItemListView(ListView):
     model = MenuItem
     template_name = 'all_item.html'
     context_object_name = 'all_item'
-    #
-    # def get_queryset(self):
-    #     queryset = MenuItem.objects.filter(is_deleted=False)
-    #     # category_id = self.request.GET.get('category', 0)
-    #     # if category_id:
-    #     #     queryset = queryset.filter(category__id=category_id)
-    #     return queryset
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # context['all_category'] = Category.objects.all()
-    #     return context
 
 
 class ItemDetailView(DetailView):
@@ -79,7 +68,7 @@ class LoginCashierView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Login successful! Welcome back.')
-                return redirect('cashier_dashboard')  # Redirect to home or another page after login
+                return redirect('cashier_dashboard')
             else:
                 form.add_error('email', 'Invalid email or password')
                 messages.error(request, 'Invalid email or password. Please try again.')  # Error message
@@ -97,7 +86,7 @@ class CashierOrdersListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu_items'] = MenuItem.objects.all()  # اضافه کردن menu_items به context
+        context['menu_items'] = MenuItem.objects.all()
         return context
 
 
