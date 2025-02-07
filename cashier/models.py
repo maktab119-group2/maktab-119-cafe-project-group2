@@ -3,7 +3,6 @@ from .managers import CustomUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 
-# from coffee_shop import models.
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
