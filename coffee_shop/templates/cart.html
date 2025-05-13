@@ -1,0 +1,76 @@
+{% load static %}
+{% load i18n %}
+{% include 'link & script.html' %}
+{% include 'header.html' %}
+
+{% block main %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #431605;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #dabe81;
+        font-weight: bold;
+    }
+    .tm-more-button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .tm-more-button:hover {
+        background-color: #0056b3;
+    }
+    section{
+        margin: 120px 40px 120px 40px;
+    }
+    form{
+        text-align: center;
+        margin-top: 30px;
+    }
+</style>
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans "Product Name" %}</th>
+                <th>{% trans "Price" %}</th>
+                <th>{% trans "Quantity" %}</th>
+                <th>{% trans "Discount" %}</th>
+                <th>{% trans "Total Price" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.discount }}%</td>
+                    <td>{{ item.price|floatformat:2 }}</td> <!-- Item total price, no calculations here -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div style="text-align: right; margin-top: 20px;">
+        <h4>Total Price: {{ total_price|floatformat:2 }}</h4>
+        <h4>Total Discount: {{ total_discount|floatformat:2 }}</h4>
+        <h4>Final Price: {{ final_price|floatformat:2 }}</h4>
+    </div>
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'payment' %}" class="tm-more-button">{% trans "Payment" %}</a>
+    </div>
+</section>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+{% endblock main %}
+{% include 'footer.html' %}

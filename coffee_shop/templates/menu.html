@@ -1,0 +1,124 @@
+{% load static %}
+{% load i18n %}
+{% include 'link & script.html' %}
+{% include 'header.html' %}
+{% block main %}
+    <div class="tm-main-section light-gray-bg">
+        <div class="container" id="main">
+            <section class="tm-section row">
+                <div class="col-lg-12 tm-section-header-container margin-bottom-30">
+                    <h2 class="tm-section-header gold-text tm-handwriting-font">
+                        <img src="{% static 'media/img/logo.png' %}" alt="Logo" class="tm-site-logo"> Our Menus
+                    </h2>
+                    <div class="tm-hr-container">
+                        <hr class="tm-hr">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <nav class="tm-side-menu">
+                        <ul id="category-list">
+                            <li><a href="#" class="category-link active" data-category="all">{% trans "All" %}</a></li>
+                            {% for category in categories %}
+                                <li><a href="#" class="category-link" data-category="{{ category.id }}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                    <img src="{% static 'media/img/vertical-menu-bg.png' %}" alt="Menu bg" class="tm-side-menu-bg">
+                </div>
+                <div class="col-lg-9 col-md-9" id="product-container">
+                    {% for category in categories %}
+                        <div class="category-menuitem_set" data-category-id="{{ category.id }}" style="display: none;">
+                            {% for i in category.menuitem_set.all %}
+                                <div class="tm-product">
+                                    <img src="{{ i.image.url }}" alt="{{ i.image }}" class="img_data" style="width: 100px; height: 100px; object-fit: cover; display: block;">
+                                    <div class="tm-product-text">
+                                        <h3 class="tm-product-title">{{ i.name }}</h3>
+                                        <p class="tm-product-description">{{ i.description }}</p>
+                                    </div>
+                                    <div class="tm-product-price">
+                                        <a href="{% url 'add_to_cart' i.id %}?table_number={{ table_number }}" class="tm-product-price-link tm-handwriting-font">
+                                            <span class="tm-product-price-currency">t</span>{{ i.price }}
+                                        </a>
+                                    </div>
+                                    <!-- نمایش کامنت‌ها -->
+                                    <div class="comments-section">
+                                        <h4>{% trans "Comments" %}</h4>
+                                        <div class="comments-container">
+                                            {% for comment in i.comment_set.all|slice:":2" %}
+                                            <div class="comment-item">
+                                                <p>{{ comment.text }}</p>
+                                            </div>
+                                            {% empty %}
+                                            <p>{% trans "No comments yet." %}</p>
+                                            {% endfor %}
+                                        </div>
+                                        <form method="post" action="{% url 'add_comment' i.id %}" class="comment-form">
+                                            {% csrf_token %}
+                                            <textarea name="comment_text" placeholder="Write a comment..." required></textarea>
+                                            <button type="submit">{% trans "Add Comment" %}</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p>{% trans "No menuitem_set available for this category." %}</p>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".category-menuitem_set").hide();
+            $(".category-menuitem_set").first().show();
+
+            $("#category-list .category-link").click(function (e) {
+                e.preventDefault();
+                var categoryId = $(this).data("category");
+
+                $(".category-menuitem_set").hide();
+                if (categoryId === "all") {
+                    $(".category-menuitem_set").show();
+                } else {
+                    $("[data-category-id='" + categoryId + "']").show();
+                }
+
+                $("#category-list .category-link").removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+    </script>
+    
+    <!-- انتخاب میز -->
+    <div class="table-selection">
+        <select id="table-select" class="tm-more-button tm-more-button-welcome" style="color: black">
+            <option value="">{% trans "Select a table" %}</option>
+            {% for table in tables %}
+                <option value="{{ table.id }}">{{ table.table_number }}</option>
+            {% empty %}
+                <p>{% trans "No tables available" %}</p>
+            {% endfor %}
+        </select>
+        <div>
+            <a href="{% url 'cart' %}" id="choose-table-btn" class="tm-more-button tm-more-button-welcome">{% trans "View shopping cart" %}</a>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById("confirm-table").addEventListener("click", function () {
+            var selectedTable = document.getElementById("table-select").value;
+            if (selectedTable) {
+                window.location.href = "{% url 'cart' %}".replace("1", selectedTable);
+            } else {
+                alert("Choose a table.");
+            }
+        });
+    </script>
+    
+    <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+{% endblock main %}
+{% include 'footer.html' %}

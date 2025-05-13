@@ -1,0 +1,91 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .btn {
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #a227f4;
+        color: white;
+    }
+
+    select {
+        padding: 15px 30px;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    table th, table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #fae91a;
+        color: #a227f4;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    img {
+        height: 80px;
+        width: 80px;
+        border-radius: 5px;
+    }
+</style>
+<body>
+<div>
+    <hr/>
+    {% if all_item %}
+        <table>
+            <thead>
+            <tr>
+                <th>{% trans "Product Name" %}</th>
+                <th>{% trans "Price" %}</th>
+                <th>{% trans "Description" %}</th>
+                <th>{% trans "Discount" %}</th>
+                <th>{% trans "Image" %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in all_item %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.description }}</td>
+                    <td>{{ i.discount }}</td>
+                    <td><img src="{{ i.image.url }}" alt="{{ i.image }}"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>can't find any item.</p>
+    {% endif %}
+</div>
+</body>
+</html>

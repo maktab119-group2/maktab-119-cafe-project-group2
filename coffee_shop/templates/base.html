@@ -1,0 +1,33 @@
+<!--   Cafe House Template   http://www.templatemo.com/tm-466-cafe-house  -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cafe Wood - Food and Drink Menu</title>
+  {% block head %}
+      {% include 'link & script.html' %}
+  {% endblock head %}
+</head>
+<body>
+    <header>
+        {% block header %}
+            {% include 'header.html' %}
+        {% endblock header %}
+    </header>
+    <main>
+        {% block main %}
+            {% include 'home.html' %}
+        {% endblock main %}
+    </main>
+    <footer>
+        {% block footer %}
+             {% include 'footer.html' %}
+        {% endblock footer %}
+    </footer>
+   <script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>      <!-- jQuery -->
+   <script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+</body>
+</html>

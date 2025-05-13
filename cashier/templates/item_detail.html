@@ -1,0 +1,100 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #btn_violet_update {
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #a227f4;
+        color: white;
+    }
+    #btn_violet_update:hover {
+        background-color: #03f103;
+    }
+    #btn_violet_delete {
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #a227f4;
+        color: white;
+    }
+    #btn_violet_delete:hover {
+        background-color: #e60000;
+    }
+    #div_btn {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    img {
+        object-position: center;
+        border: 1px solid #000;
+        padding: 10px;
+        background-color: #f0f0f0;
+        height: 350px;
+    }
+    section {
+        text-align: start;
+        line-height: 2;
+        display: flex;
+        justify-content: center;
+        gap: 100px;
+        padding: 50px 0;
+    }
+    #div_book {
+        padding: 100px 0;
+    }
+</style>
+<body>
+<section>
+    <div id="div_book">
+        <p> {% trans "Product Name" %} : {{ item.name }}</p>
+        <p>{% trans "Price" %} : {{ item.price }}</p>
+        <p>{% trans "Description" %} : {{ item.description }}</p>
+        <p>{% trans "Discount" %} : {{ item.discount }}</p>
+        <p>{% trans "Image" %} : {{ item.image }}</p>
+    </div>
+
+    <div>
+        <img src="{{ item.image.url }}" alt="{{ item.name }}">
+    </div>
+</section>
+
+<!-- ✅ لینک "View Details" اضافه شد -->
+<div style="text-align: center; margin-bottom: 20px;">
+    <a href="{% url 'item_detail' item.id %}" class="btn btn-primary">{% trans "View Details" %}</a>
+</div>
+
+<div id="div_btn">
+    <button id="btn_violet_update" onclick="showUpdateItemPage()">{% trans "Update" %}</button>
+    <button id="btn_violet_delete" onclick="showDeleteItemPage()">{% trans "Delete" %}</button>
+</div>
+
+<script>
+    function showUpdateItemPage() {
+        window.location.href = `http://127.0.0.1:8000/update/{{ item.id }}`;
+    }
+
+    function showDeleteItemPage() {
+        window.location.href = `http://127.0.0.1:8000/delete/{{ item.id }}`;
+    }
+</script>
+</body>
+</html>
+
+اضافه شد\
+
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, null=True, blank=True, related_name='orders')
+توی مدل ها اضافه شود

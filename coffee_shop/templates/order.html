@@ -1,0 +1,138 @@
+{% load static %}
+{% load i18n %}
+{% include 'link & script.html' %}
+{% include 'header.html' %}
+{% block main %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    
+    th, td {
+        border: 1px solid #431605;
+        padding: 8px;
+        text-align: center;
+    }
+    
+    th {
+        background-color: #dabe81;
+        font-weight: bold;
+    }
+    
+    .tm-more-button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .tm-more-button:hover {
+        background-color: #0056b3;
+    }
+    
+    section{
+        margin: 120px 40px 120px 40px;
+    }
+    
+    form{
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    .order p {
+        margin: 0;
+        font-size: 1.3em;
+    }
+
+    .order button {
+        margin-left: 10px;
+        background-color: #ff7043;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .order button:hover {
+        background-color: #ff5722;
+    }
+
+    .order ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 10px 0 0 0;
+    }
+
+    .order li {
+        padding: 5px 0;
+        font-size: 1.1em;
+    }
+
+    .back-button button {
+        background-color: #66bb6a;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        transition: background 0.3s;
+    }
+
+    .back-button button:hover {
+        background-color: #388e3c;
+    }
+    .span{
+        background-color: #f8e94a;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+<section class="tm-section container " id="main">
+    <div class="col-lg-12 tm-section-header-container">
+        <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="{% static 'media/img/logo.png' %}" alt="Logo" class="tm-site-logo"> Order list</h2>
+        <div class="tm-hr-container"><hr class="tm-hr"></div>
+    </div>
+    <div class="tm-main-section light-gray-bg tm-section tm-section-margin-bottom-0 row">
+        <table>
+            <thead>
+                <tr>
+                    <th>{% trans "Order Number" %}</th>
+                    <th>{% trans "Product Name" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Time" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Receipt" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in order %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.menu_items.name }}</td>
+                        <td>{{ i.quantity }}</td>
+                        <td>{{ i.menu_items.price }}</td>
+                        <td>{{ i.timestamp }}</td>
+                        <td>
+                            <form style="text-align: center; margin-top: 30px;" method="post" action="{% url 'receipt' order_id=order.id %}">
+                                {% csrf_token %}
+                                <a href="{% url 'receipt' order_id=order.id %}" class="tm-more-button">{% trans "Receipt" %}</a>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<script type="text/javascript" src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/templatemo-script.js' %}"></script>
+{% endblock main %}
+{% include 'footer.html' %}
